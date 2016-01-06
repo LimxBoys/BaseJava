@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.base.dao.AreaDao">
+	<select id="findProvince" resultType="com.base.vo.BaseArea">
+		SELECT DISTINCT
+		area.base_areaid,area.name FROM base_area area where 1=1 and
+		area.parentid='0'
+	</select>
+	<select id="findCity" resultType="com.base.vo.BaseArea">
+		SELECT DISTINCT
+		area.base_areaid,area.name FROM base_area area where 1=1 and
+		area.parentid=#{condition.province}
+	</select>
+	<select id="findCounty" resultType="com.base.vo.BaseArea">
+		SELECT DISTINCT
+		area.base_areaid,area.name FROM base_area area
+		where 1=1 and
+		area.parentid=#{condition.city}
+	</select>
+</mapper>

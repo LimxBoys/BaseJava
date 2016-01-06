@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.base.dao.FunctionDAO">
+	<resultMap id="FunctionMap" type="Function">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+		<result column="function_name" property="functionName"
+			jdbcType="VARCHAR" />
+		<result column="action" property="action" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="function_desc" property="desc" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="display" property="display" jdbcType="INTEGER" />
+		<result column="insert_time" property="insertTime" javaType="java.sql.Timestamp"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 新增权限 -->
+	<insert id="insertFunction" parameterType="Function"
+		keyProperty="id">
+		insert into sys_function
+		(
+
+		parent_id,function_name,display,state,action,icon,function_desc,insert_time
+
+		)
+		values
+		(
+
+		#{parentId},#{functionName},#{display},#{state},#{action},#{icon},#{desc},#{insertTime}
+
+		)
+
+	</insert>
+
+	<!--新增功能、角色关联 -->
+	<insert id="insertFunctionRole" parameterType="int">
+		insert
+		into
+		sys_function_role
+		(
+
+		function_id,role_id
+
+		)
+		values
+		(
+
+		#{functionId},#{roleId}
+
+		)
+
+	</insert>
+
+
+
+	<!-- 删除功能列表 -->
+	<delete id="deleteFunction" parameterType="int">
+		delete from
+		sys_function where id = #{id}
+	</delete>
+
+	<!-- 删除角色关联信息 -->
+	<delete id="deleteFunctionRole" parameterType="int">
+		delete from
+		sys_function_role where function_id = #{functionId}
+	</delete>
+
+	<!-- 删除角色功能关联信息 -->
+	<delete id="deleteRoleFunction" parameterType="int">
+		delete from
+		sys_function_role where role_id = #{roleId}
+	</delete>
+
+
+	<!-- 修改功能状态 -->
+	<update id="updateState" parameterType="int" flushCache="true">
+		update
+		sys_function
+		set state =
+		#{state}
+		where id =
+		#{id}
+	</update>
+
+	<!-- 修改function信息 -->
+	<update id="updateFunction" parameterType="Function" flushCache="true">
+		update sys_function
+		set parent_id = #{parentId},
+		function_name = #{functionName},
+		state = #{state},
+		display = #{display},
+		action = #{action},
+		function_desc = #{desc}
+		where id = #{id}
+	</update>
+
+
+
+
+	<!-- 加载function -->
+	<select id="findFunction" parameterType="int" resultMap="FunctionMap">
+		SELECT *
+		from sys_function where id=#{id}
+	</select>
+
+
+	<!-- 根据角色查询权限 -->
+	<select id="findAllEffectiveFunctionsbyRoleId" parameterType="int"
+		resultMap="FunctionMap">
+		SELECT DISTINCT(f.action),f.function_name,f.id,f.parent_id
+		from sys_role
+		r,sys_function
+		f,sys_function_role fr
+		where r.id=fr.role_id
+		and
+		f.id=fr.function_id
+		and f.state=1
+		and
+		r.id= #{roleId}
+	</select>
+
+	<!-- 查询当前用户的功能列表 -->
+	<select id="findAllEffectiveFunctionsbyLoginName" parameterType="java.lang.String"
+		resultMap="FunctionMap">
+
+		SELECT
+		DISTINCT(f.id),f.parent_id,f.function_name,f.action,f.function_desc,f.icon
+		from
+		sys_function f
+		,sys_user u,sys_role r,sys_user_role
+		ur,sys_function_role rf
+		where f.state=1
+		and f.display=1
+		and
+		f.id=rf.function_id
+		and
+		rf.role_id=r.id
+		and r.id=ur.role_id
+		and r.state=1
+		and ur.user_id=u.id
+		and
+		u.login_name=#{loginName}
+		ORDER BY
+		f.function_desc
+	</select>
+
+	<!-- 所有功能权限列表 -->
+	<select id="findFunctionList" resultMap="FunctionMap">
+		SELECT * from
+		sys_function
+		order by id
+	</select>
+
+	<!-- 所有有效的功能权限列表 -->
+	<select id="findEffectiveFunctinList" resultMap="FunctionMap">
+		SELECT * from
+		sys_function where state=1
+		order by id
+	</select>
+
+	<!-- 查询当前action请求 -->
+	<select id="findEffectiveFunctionsbyAction" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		SELECT id from sys_function where state=1 and action like
+		CONCAT(#{action},'%')
+	</select>
+
+	<!-- 根据角色获得相应的功能权限Id -->
+	<select id="findFunctionTree" parameterType="int" resultType="int">
+		SELECT function_id from sys_function_role where role_id=#{roleId}
+		order by
+		function_id
+	</select>
+
+	<!-- 用户条件查询 -->
+	<select id="findFunctionListByQuery" parameterType="Function"
+		resultMap="FunctionMap">
+		SELECT * from sys_function where id!=0
+
+		<if test="functionName!=null and functionName!='' ">
+			and function_name like CONCAT(CONCAT('%',
+			#{functionName}),'%')
+		</if>
+		<if test="action!= null and action!= '' ">
+			and action like CONCAT(CONCAT('%', #{action}),'%')
+		</if>
+
+		order by id
+	</select>
+
+	<!-- 查询孩子节点 -->
+	<select id="findFunctionbyParentId" parameterType="int"
+		resultMap="FunctionMap">
+		SELECT * from sys_function where parent_id=#{id}
+	</select>
+
+	<!-- 查询孩子节点 -->
+	<select id="findFunctionbyParentIdAndFunctionName"
+		parameterType="Function" resultMap="FunctionMap">
+		SELECT * from sys_function where
+		parent_id=#{parentId} and function_name=#{functionName}
+	</select>
+
+
+
+
+</mapper>

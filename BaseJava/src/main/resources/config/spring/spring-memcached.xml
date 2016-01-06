@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="order" value="1" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="locations">
+			<list>
+				<value>classpath:config/properties/memcached.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="memcachedPool" class="com.danga.MemCached.SockIOPool"
+		factory-method="getInstance" init-method="initialize" destroy-method="shutDown">
+		<constructor-arg>
+			<value>neeaMemcachedPool</value>
+		</constructor-arg>
+		<property name="servers">
+			<value>${memcached.server}</value>
+        </property>
+        <property name="initConn">
+             <value>${memcached.initConn}</value>
+        </property>
+        <property name="minConn">
+            <value>${memcached.minConn}</value>
+        </property>
+        <property name="maxConn">
+            <value>${memcached.maxConn}</value> 
+        </property>
+        <property name="nagle">
+            <value>${memcached.nagle}</value>  
+        </property>
+        <property name="socketTO">
+             <value>${memcached.socketTO}</value> 
+        </property>
+	</bean>
+	<bean id="memcachedClient" class="com.danga.MemCached.MemCachedClient">
+		<constructor-arg>
+			<value>neeaMemcachedPool</value>
+		</constructor-arg>
+	</bean>
+</beans>  

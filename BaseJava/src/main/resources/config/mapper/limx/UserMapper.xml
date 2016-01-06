@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.base.dao.UserDao">
+	<select id="findall" resultType="User">
+		select * from s_user
+	</select>
+	<!-- <insert id="insertUser"  parameterType="User" useGeneratedKeys="true" keyProperty="user.id">
+		insert into s_user(username,password) values(#{user.username,jdbcType=VARCHAR},#{user.password,jdbcType=VARCHAR})
+	</insert> -->
+	<insert id="insertUser1"  parameterType="User" keyProperty="id">
+		<selectKey resultType="INTEGER" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+	
+		insert into s_user(username,password) values(#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})
+	</insert>
+	<resultMap id="UserMap" type="User">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="display_name" property="displayName" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+		<result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
+		<result column="bind_ip" property="bindIp" jdbcType="VARCHAR" />
+		<result column="ipband_flag" property="ipbandFlag" jdbcType="INTEGER" />
+		<result column="try_times" property="tryTimes" jdbcType="INTEGER" />
+		<result column="last_logintime" property="lastLogintime"
+			javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="contact_phone" property="contactPhone"
+			jdbcType="VARCHAR" />
+		<result column="insert_time" property="insertTime" javaType="java.sql.Timestamp"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<!-- 新增用户 -->
+	<insert id="insertUser" parameterType="User" keyProperty="id">
+		<selectKey resultType="INTEGER" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert
+		into sys_user
+		(
+
+		login_name,password,display_name,type,state,email,contact_phone,insert_time
+
+		)
+		values
+		(
+
+		#{loginName},#{password},#{displayName},#{type},#{state},#{email},#{contactPhone},#{insertTime}
+
+		)
+
+	</insert>
+
+ 
+    <!--新增用户、角色关联  -->
+	<insert id="insertUserRole" parameterType="int">
+		insert
+		into sys_user_role
+		(
+
+		user_id,role_id
+
+		)
+		values
+		(
+
+		#{userId},#{roleId}
+
+		)
+
+	</insert>
+
+	<!-- 删除一条用户信息 -->
+	<delete id="deleteUser" parameterType="int">
+		delete from sys_user where id = #{userId}
+	</delete>
+
+	<!-- 删除用户关联信息 -->
+	<delete id="deleteUserRole" parameterType="int">
+		delete from sys_user_role where user_id = #{userId}
+	</delete>
+
+
+	<!-- 修改密码 -->
+	<update id="updatePassword" parameterType="User" flushCache="true">
+		update sys_user
+		set password =
+		#{password}
+		where login_name =
+		#{loginName}
+	</update>
+
+
+	<!-- 修改用户信息 -->
+	<update id="updateUser" parameterType="User" flushCache="true">
+		update sys_user
+        set display_name=#{displayName},
+         contact_phone=#{contactPhone},login_name=#{loginName}
+		where id =
+		#{id}
+	</update>
+
+
+	<!-- 修改用户状态 -->
+	<update id="updateState" parameterType="int" flushCache="true">
+		update sys_user
+		set state =
+		#{state}
+		where id =
+		#{id}
+	</update>
+
+
+
+	<!-- 用户查询 -->
+	<select id="finduserList" resultMap="UserMap">
+		select
+		id,login_name,display_name,type,state,email,contact_phone
+		from sys_user order by id
+	</select>
+
+	<!-- 用户条件查询 -->
+	<select id="findUserListByQuery" parameterType="User"
+		resultMap="UserMap">
+		select
+		id,login_name,display_name,type,state,email,contact_phone
+		from sys_user
+
+		<where>
+			<if test="loginName!=null and loginName!='' ">
+				login_name like CONCAT(CONCAT('%', #{loginName}),'%')
+			</if>
+			<if test="displayName!= null and displayName!= '' ">
+				and display_name like CONCAT(CONCAT('%', #{displayName}),'%')
+			</if>
+		</where>
+
+		order by id
+	</select>
+	
+		<!-- 查询某个用户当前角色 -->
+	<select id="findRolesByUserId" parameterType="int" resultType="int">
+		select role_id from sys_user_role where user_id=#{userId}
+	</select>
+	
+	
+		<!-- 用户查询 -->
+	<select id="findUserByLoginName" parameterType="java.lang.String"
+		resultMap="UserMap">
+		select * from sys_user where login_name=#{loginName}
+	</select>
+	
+	<select id="findUserByUserPhone" parameterType="java.lang.String"
+		resultMap="UserMap">
+		select * from sys_user where contact_phone=#{userPhone}
+	</select>
+	
+		<!-- 用户查询 -->
+	<select id="findUserByEmail" parameterType="java.lang.String"
+		resultMap="UserMap">
+		select * from sys_user where email=#{email}
+	</select>
+	
+	<select id="findUserById" parameterType="int"
+		resultMap="UserMap">
+		select * from sys_user where id=#{id}
+	</select>
+</mapper>
