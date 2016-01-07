@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			
 		</form>
-		<div id="message">${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}</div>
+		<div id="message"><p class="error">ERROR: ${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}</p></div>
 	</div>
   </body>
 </html>
