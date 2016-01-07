@@ -190,8 +190,7 @@
 										closable : true
 									});
 								}
-								tabClose();
-    tabCloseEven();
+								
 							};												
 					});
 </script>
