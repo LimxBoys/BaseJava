@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>登录</title>
+    <title>My JSP 'MyJsp.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -19,16 +19,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+	<link rel="stylesheet" href="<%=basePath%>/resource/css/login.css" />
+	<link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="<%=basePath%>/resource/easyui/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	</script>
   </head>
   
   <body>
-   		<h3>用户登录</h3>
-   		${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}
-   		<form action="${pageContext.request.contextPath}/j_spring_security_check" method="post">
-		用户名:<input type="text" name="username"><br>
-		密码：<input type="password" name="password">
-		<input type="submit" value="登录">
-	</form>
+   <div class="lg-container">
+		<h1>LimxBoys</h1>
+		<form action="${pageContext.request.contextPath}/j_spring_security_check" id="lg-form" name="lg-form" method="post">
+			
+			<div>
+				<label for="username">Username:</label>
+				<input type="text" name="username" id="username" placeholder="username"/>
+			</div>
+			
+			<div>
+				<label for="password">Password:</label>
+				<input type="password" name="password" id="password" placeholder="password" />
+			</div>
+			
+			<div>				
+				<button type="submit" id="login">Login</button>
+			</div>
+			
+		</form>
+		<div id="message">${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}</div>
+	</div>
   </body>
 </html>
