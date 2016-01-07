@@ -24,12 +24,10 @@ import com.base.util.SearchConditionUtil;
 
 /**
  * 
- * 
- * 项目名称：base-spring-framework 类名称：RoleController 类描述： 角色管理工具 创建人：LiMingYi
- * 创建时间：2015年2月6日 下午4:16:24 修改人：LiMingYi 修改时间：2015年2月6日 下午4:16:24 修改备注：
- * 
- * @version
- * 
+ * @author limingxing
+ * @Date:2016-1-7上午10:56:27
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
  */
 @Controller
 @RequestMapping("/role")

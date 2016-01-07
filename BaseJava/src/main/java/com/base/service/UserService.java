@@ -7,7 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import com.base.model.User;
 import com.base.vo.UserRole;
 import com.github.pagehelper.PageInfo;
-
+/**
+ * 
+ * @author limingxing
+ * @Date:2016-1-7上午10:57:58
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
+ */
 public interface UserService {
 
 	List<User> findall();

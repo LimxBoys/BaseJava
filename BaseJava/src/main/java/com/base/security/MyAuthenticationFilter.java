@@ -17,7 +17,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.base.dao.UserDao;
 import com.base.model.User;
 import com.base.util.MD5Util;
-
+/**
+ * 
+ * @author limingxing
+ * @Date:2016-1-7上午10:57:58
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
+ */
 public class MyAuthenticationFilter extends
 		UsernamePasswordAuthenticationFilter {
 	private static final String USERNAME = "username";

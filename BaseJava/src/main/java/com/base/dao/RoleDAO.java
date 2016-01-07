@@ -9,13 +9,11 @@ import com.base.model.Role;
 
 
 /**
- * role DAO
  * 
- * 项目名称：base_spring_framework 类名称：RoleDAO 类描述： 创建人：limingxing 创建时间：2015年1月27日 下午7:09:58 修改人：limingxing
- * 修改时间：2015年1月27日 下午7:09:58 修改备注：
- * 
- * @version
- * 
+ * @author limingxing
+ * @Date:2016-1-7上午10:57:58
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
  */
 public interface RoleDAO {
 

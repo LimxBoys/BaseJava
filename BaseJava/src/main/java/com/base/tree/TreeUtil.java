@@ -5,7 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.base.model.Function;
-
+/**
+ * 
+ * @author limingxing
+ * @Date:2016-1-7上午10:57:58
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
+ */
 public class TreeUtil {
 	public static List<Tree> getTreeFunction(List<Function> functionList) {
 		List<BaseModules> modules = new ArrayList<BaseModules>();

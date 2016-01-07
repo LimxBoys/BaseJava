@@ -29,8 +29,6 @@ import com.base.model.User;
  * 
  * 如果需要包括用户的其他属性，可以实现 UserDetails 接口中增加相应属性即可
  * 权限验证类
- * @author lanyuan
- * 2013-11-19
  * @author limingxing
  * @2015-12-2
  * version 1.0v

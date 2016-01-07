@@ -9,12 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 
- * 
- * 项目名称：base-spring-framework 类名称：SearchConditionUtil 类描述： 查询条件封装 创建人：LiMingYi 创建时间：2015年2月6日
- * 下午2:38:58 修改人：LiMingYi 修改时间：2015年2月6日 下午2:38:58 修改备注：
- * 
- * @version
- * 
+ * @author limingxing
+ * @Date:2016-1-7上午10:57:58
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
  */
 public class SearchConditionUtil {
 

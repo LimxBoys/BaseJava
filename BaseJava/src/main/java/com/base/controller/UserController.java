@@ -1,5 +1,6 @@
 package com.base.controller;
-
+/**
+ */
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,13 @@ import com.base.util.ResponseUtil;
 import com.base.util.UserUtil;
 import com.base.vo.UserRole;
 import com.github.pagehelper.PageInfo;
-
+/**
+ * 
+ * @author limingxing
+ * @Date:2016-1-7上午10:57:45
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {

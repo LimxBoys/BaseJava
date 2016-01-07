@@ -5,7 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.base.model.User;
-
+/**
+ * 
+ * @author limingxing
+ * @Date:2016-1-7上午10:57:58
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
+ */
 public interface UserDao {
 	List<User> findall();
 	int insertUser1(User user);

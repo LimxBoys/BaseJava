@@ -1,5 +1,11 @@
 package com.base.vo;
-
+/**
+ * 
+ * @author limingxing
+ * @Date:2016-1-7上午10:57:58
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
+ */
 public class BaseArea {
 	private String base_areaid;
 	private String name;

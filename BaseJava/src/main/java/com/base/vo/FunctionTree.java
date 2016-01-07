@@ -1,17 +1,10 @@
 package com.base.vo;
 /**
  * 
- *    
- * 项目名称：base_spring_framework   
- * 类名称：FunctionTree   
- * 类描述：   角色、功能树
- * 创建人：limy
- * 创建时间：2015年2月6日 下午1:28:47   
- * 修改人：Administrator   
- * 修改时间：2015年2月6日 下午1:28:47   
- * 修改备注：   
- * @version    
- *
+ * @author limingxing
+ * @Date:2016-1-7上午11:01:31
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
  */
 public class FunctionTree {
 

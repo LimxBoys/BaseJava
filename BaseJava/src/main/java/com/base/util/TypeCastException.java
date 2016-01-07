@@ -4,11 +4,11 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * 类型转换工具类<br>
- * 
- * @author limx
- * @since 2009-07-06
- * @see java.lang.RuntimeException
+ * 类型转换工具
+ * @author limingxing
+ * @Date:2016-1-7上午10:57:58
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
  */
 public class TypeCastException extends RuntimeException {
 

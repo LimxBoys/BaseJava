@@ -9,13 +9,13 @@ import java.util.Map;
 import com.base.util.TypeCaseHelper;
 
 
-
 /**
- * 公用条件查询类 也可以用于MVC层之间的参数传递
- * 
+ *  公用条件查询类 也可以用于MVC层之间的参数传递
  * @author limingxing
- * 
- */ 
+ * @Date:2016-1-7上午11:01:20
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
+ */
 public class Criteria {
 
     /**

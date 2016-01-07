@@ -3,17 +3,10 @@ package com.base.vo;
 
 /**
  * 
- * 用户角色数Vo   
- * 项目名称：base_spring_framework   
- * 类名称：UserRole   
- * 类描述：   用户角色数Vo
- * 创建人：Administrator   
- * 创建时间：2015年2月6日 下午1:24:44   
- * 修改人：Administrator   
- * 修改时间：2015年2月6日 下午1:24:44   
- * 修改备注：   
- * @version    
- *
+ * @author limingxing
+ * @Date:2016-1-7上午11:01:44
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
  */
 public class UserRole {
 

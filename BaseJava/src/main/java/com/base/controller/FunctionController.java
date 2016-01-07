@@ -25,14 +25,11 @@ import com.base.util.ResponseUtil;
 import com.base.util.UserUtil;
 
 /**
- * function action
  * 
- * 项目名称：base_spring_framework 类名称：FunctionController 类描述： function action
- * 创建人：limingxing 创建时间：2015年12月16日 下午1:59:41 修改人：limingxing 修改时间：2015年2月6日
- * 下午1:59:41 修改备注：
- * 
- * @version
- * 
+ * @author limingxing
+ * @Date:2016-1-7上午10:56:27
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
  */
 @Controller
 @RequestMapping("/function")

@@ -11,8 +11,11 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
- * 类型转换辅助工具类<br>
- * 
+ * 类型转换辅助工具
+ * @author limingxing
+ * @Date:2016-1-7上午10:57:58
+ * @email:limingxing_aqgy@sina.com
+ * @version:1.0
  */
 public class TypeCaseHelper {
 
