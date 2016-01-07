@@ -17,7 +17,7 @@ public class MyTest {
 	private UserService userService;
 	@Test
 	public void test() {
-		System.out.println(userService);
+		
 	}
 
 }
