@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			
 		</form>
-		<div id="message"><p class="error">ERROR: ${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}</p></div>
+		<div id="message"><p class="error"> ${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}</p></div>
 	</div>
   </body>
 </html>
