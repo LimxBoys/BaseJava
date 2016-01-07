@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.base.model.User;
 import com.base.service.UserService;
+import com.base.util.MD5Util;
 import com.base.util.PageUtil;
 import com.base.util.ResponseUtil;
 import com.base.util.UserUtil;
@@ -124,7 +125,7 @@ public class UserController {
 		user.setLoginName(loginName);
 		user.setDisplayName(displayName);
 		user.setContactPhone(contactPhone);
-		user.setPassword(password);
+		user.setPassword(MD5Util.encode(password));
 		user.setType("1");
 		userService.insertUser(user);
 		if (roleIdAdd != null && roleIdAdd.length != 0) {
@@ -333,5 +334,25 @@ public class UserController {
 		User u = userService.findUserByLoginName(loginName);
 		return ResponseUtil.success(u.getDisplayName());
 
+	}
+	@RequestMapping(value = {"/changePwdinfo"})
+	public ModelAndView changePwdinfo(HttpSession session){
+		ModelAndView view=new ModelAndView("views/limx/user_changepwd");
+		return view;
+	}
+	@RequestMapping(value="/updatepassword")
+	@ResponseBody
+	public Object updatepassword(String password,String pwd){
+		password=MD5Util.encode(password);
+		pwd=MD5Util.encode(pwd);
+		String loginName=UserUtil.findSessionUser().getUsername();
+		String oldpassword=userService.findUserByLoginName(loginName).getPassword();
+		if(!pwd.equals(oldpassword)){
+			return ResponseUtil.fail("请输入正确的原密码");
+		}else{
+		userService.updatePassword(loginName, pwd, password);
+		return ResponseUtil.success();
+		}
+		
 	}
 }
