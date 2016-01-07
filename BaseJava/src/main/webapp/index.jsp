@@ -191,8 +191,32 @@
 									});
 								}
 								
-							};												
-					});
+							};
+							
+	/* 修改密码 */
+	$('#editPassword').click(function() {
+		$('#user_changepwd').dialog({
+			title : '修改登陆密码',
+			width : 350,
+			height : 200,
+			closed : false,
+			cache : false,
+			modal : true,
+			href: '<%=basePath%>user/changePwdinfo.do'
+		});
+	});
+	/* 退出 */
+	$('#logout').click(function() {
+		$.messager.confirm('警告', '确定要退出吗？',
+		function(r) {
+			if (r) {
+				//退出操作
+				location.href ="<%=basePath%>j_spring_security_logout";
+			}
+		});
+	});												
+});
+
 </script>
 <style>
 .footer {
@@ -210,9 +234,37 @@
 <body class="easyui-layout">
 	<div region="north" border="true" split="true"
 		style="overflow: hidden; height: 80px;">
-		<div class="top-bg">
-			<a href="<%=basePath%>j_spring_security_logout">退出</a>
-		</div>
+		<div id="headerDiv" class='top-bg'>
+					<div style=" heigth : 5px;">
+						<div>
+							<span
+								style="float:left; height: 29px;color:white;margin-left:20px;margin-top:5px;padding-left:20px;"
+								>${user.realName}， <span
+								style="font-size:14px;padding-bottom:3px;" id="sayHelloSpan"></span>
+							</span>
+						</div>
+						<div style=" float:right; margin : 0px 30px 0px 0px;">
+							<span style="padding: 8px 10px 3px 18px;" 
+								style="height:20px;"> <img
+								style="padding-top:10px;cursor:pointer;"
+								onMouseOver="this.src='<%=basePath%>resource/images/2_2.png'"
+								onMouseOut="this.src='<%=basePath%>resource/images/2.png'"
+								src="<%=basePath%>resource/images/2.png"  /> </span> <span
+								style="padding: 8px 10px 3px 18px;height: 20px;"
+								> <img
+								style="padding-top:10px;cursor:pointer;"
+								onMouseOver="this.src='<%=basePath%>resource/images/3_3.png'"
+								onMouseOut="this.src='<%=basePath%>resource/images/3.png'"
+								src="<%=basePath%>resource/images/3.png" id="editPassword" />
+							</span> <span style="padding: 8px 10px 3px 18px;" 
+								style="height:20px;"> <img
+								style="padding-top:10px;cursor:pointer;"
+								onMouseOver="this.src='<%=basePath%>resource/images/4_4.png'"
+								onMouseOut="this.src='<%=basePath%>resource/images/4.png'"
+								src="<%=basePath%>resource/images/4.png" id="logout" /> </span>
+						</div>
+					</div>
+				</div>
 	</div>
 	<div region="south" border="true" split="true"
 		style="overflow: hidden; height: 40px;">
@@ -252,7 +304,7 @@
         <div class="menu-sep"></div>
         <div id="mm-tabcloseright">当前页右侧全部关闭</div>
         <div id="mm-tabcloseleft">当前页左侧全部关闭</div>
-        
-</div>
+	</div>
+		<div id="user_changepwd"></div>
 </body>
 </html>
