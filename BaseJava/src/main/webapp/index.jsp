@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>  
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -239,7 +240,7 @@
 						<div>
 							<span
 								style="float:left; height: 29px;color:white;margin-left:20px;margin-top:5px;padding-left:20px;"
-								>${user.realName}， <span
+								><font size="5" color="red">欢迎您:<sec:authentication property="principal.username" /></font> <span
 								style="font-size:14px;padding-bottom:3px;" id="sayHelloSpan"></span>
 							</span>
 						</div>
