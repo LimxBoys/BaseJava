@@ -215,7 +215,30 @@
 				location.href ="<%=basePath%>j_spring_security_logout";
 			}
 		});
-	});												
+	});	
+	sayHello = function() {
+		var hour = new Date().getHours(), hello = '';
+		if (hour < 6) {
+			hello = '凌晨好';
+		} else if (hour < 9) {
+			hello = '早上好';
+		} else if (hour < 12) {
+			hello = '上午好';
+		} else if (hour < 14) {
+			hello = '中午好';
+		} else if (hour < 17) {
+			hello = '下午好';
+		} else if (hour < 19) {
+			hello = '傍晚好';
+		} else if (hour < 22) {
+			hello = '晚上好';
+		} else {
+			hello = '夜里好';
+		}
+		return hello + '！';
+	};					
+	$("#sayHelloSpan").text(sayHello());
+					
 });
 
 </script>
@@ -230,17 +253,24 @@
 	background-color: #d8e4fe;
 	height: 80px;
 }
+#headerDiv {
+    font-size: 12px;
+    height: 104px;
+    width: 100%;
+    line-height: 40px;
+    background-image: url("<%=basePath%>resource/images/i/top.jpg");
+}
 </style>
 </head>
 <body class="easyui-layout">
 	<div region="north" border="true" split="true"
 		style="overflow: hidden; height: 80px;">
-		<div id="headerDiv" class='top-bg'>
+		<div id="headerDiv" class='top-bg' style="background-image:<%=basePath%>resource/images/i/top.jpg">
 					<div style=" heigth : 5px;">
 						<div>
 							<span
 								style="float:left; height: 29px;color:white;margin-left:20px;margin-top:5px;padding-left:20px;"
-								><font size="5" color="red">欢迎您:<sec:authentication property="principal.username" /></font> <span
+								><font style="font-size:14px;padding-bottom:3px;">欢迎您:<sec:authentication property="principal.username" /></font> <span
 								style="font-size:14px;padding-bottom:3px;" id="sayHelloSpan"></span>
 							</span>
 						</div>
