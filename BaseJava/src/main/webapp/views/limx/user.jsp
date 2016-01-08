@@ -80,6 +80,7 @@
 	pagination : true,//分页控件  
 		fit : true,
 		fitColumns : true,
+		height:200,
 		rownumbers : true,
 		pageSize : 10,
 		idField : '',//指定列biaoshi
@@ -133,8 +134,8 @@
 	
 	
 	
-		$("#ModifyWindow").window('close');
-		$("#addWindow").window('close');
+		$("#ModifyWindow").dialog('close');
+		$("#addWindow").dialog('close');
 		$('#user').datagrid({
     url:'<%=basePath%>/user/list.do',
 			pageSize : 20,
@@ -146,7 +147,15 @@
 				text : 'Add',
 				iconCls : 'icon-add',
 				handler : function() {
-					$("#addWindow").window('open');
+					$("#addWindow").dialog({
+						modal:true,
+						title:'新增',
+						width: 400,    
+		    			height: 600,  
+						buttons:[
+						{text:'保存',handler:function(){add();}},
+						{text:'关闭',handler:function(){Cancel();}}
+						]});
 					$('#loginName2').textbox('setValue','');
 					$('#password2').textbox('setValue','');
 					$('#contactPhone2').textbox('setValue','');
@@ -160,12 +169,20 @@
 					if(b.length==0){
 						jQuery.messager.alert('提示','请选择要编辑的行');
 					}else if(b.length==1){
-						$("#ModifyWindow").window('open');
+						$("#ModifyWindow").dialog({
+						modal:true,
+						title:'修改',
+						width: 400,    
+		    			height: 600,  
+						buttons:[
+						{text:'保存',handler:function(){save();}},
+						{text:'关闭',handler:function(){Cancel();}}
+						]});
 						var user=b[0];
 						$("#id1").val(user.id);
 						$("#loginName1").val(user.loginName);
-						$("#contactPhone1").val(user.contactPhone);
-						$("#displayName1").val(user.displayName);
+						$('#contactPhone1').textbox('setValue',user.contactPhone);
+						$('#displayName1').textbox('setValue',user.displayName);
 						$('#rolelistModify').datagrid("reload");
 					}else if(b.length>1){
 						jQuery.messager.alert('提示','请正确选择要编辑的行');
@@ -278,22 +295,23 @@
 	for ( var i = 0; i < roleIdModify.length; i++) {
 		roleIds.push(roleIdModify[i].id);
 	}
-		$('#form1').form({    
+		$('#form1').form('submit',{    
     		url:'<%=basePath%>/user/update.do',
+    			method:'post',
 				onSubmit : function(param) {
 					param.roleIdModify=roleIds;
+					return $("#form1").form('validate');
 				},
 				success : function(data) {
 				
 				var data = eval('(' + data + ')');
 				if(data.result){
-					$("#ModifyWindow").window('close');
+					$("#ModifyWindow").dialog('close');
 					$("#user").datagrid('reload');
 				}
 				}
 			});
 			// submit the form    
-			$('#form1').submit();
 		
 	}
 	function add(){
@@ -302,22 +320,23 @@
 	for ( var i = 0; i < roleIdAdd.length; i++) {
 		roleIds.push(roleIdAdd[i].id);
 	}
-		$('#form2').form({    
+		$('#form2').form('submit',{    
     		url:'<%=basePath%>/user/add.do',
+    		method:'post',
 			onSubmit : function(param) {
 				param.roleIdAdd = roleIds;
+				return $("#form2").form('validate');
 			},
 			success : function(data) {
 
 				var data = eval('(' + data + ')');
 				if (data.result) {
-					$("#addWindow").window('close');
+					$("#addWindow").dialog('close');
 					$("#user").datagrid('reload');
 				}
 			}
 		});
 		// submit the form    
-		$('#form2').submit();
 
 	}
 	/* 冻结激活 */
@@ -359,7 +378,7 @@
 			$('#dialogpassword').dialog('close');
 			$('#dialogpassword').hide();
 		}
-		//提交
+		//密码修改
 		function onSave(){
 			$('#update-changepwd').form('submit',{  
 				method:'post',
@@ -378,8 +397,8 @@
    		 });
 		}
 	function Cancel() {
-		$("#ModifyWindow").window('close');
-		$("#addWindow").window('close');
+		$("#ModifyWindow").dialog('close');
+		$("#addWindow").dialog('close');
 	}
 </script>
 </head>
@@ -387,7 +406,7 @@
 <body>
 	<div id="user" style="height:100% "></div>
 	<div id="addWindow" class="easyui-window" title="添加"
-		style="width:350px;height:600px;">
+		style="width:350px">
 		<form id="form2" style="padding:10px 20px 10px 40px;">
 
 			<p>
@@ -406,17 +425,17 @@
 				电话: <input id="contactPhone2" class="easyui-textbox" name="contactPhone" data-options="required:true"
 							missingMessage="电话不能空" type="text">
 			</p>
-			<div id="rolelistAdd"></div>
-			<br>
+			<div id="rolelistAdd" style="height: 400"></div>
+			<!-- <br>
 			<div style="padding:5px;text-align:center;">
 				<a href="javascript:add()" class="easyui-linkbutton" icon="icon-ok">Ok</a>
 				<a href="javascript:Cancel()" class="easyui-linkbutton"
 					icon="icon-cancel">Cancel</a>
-			</div>
+			</div> -->
 		</form>
 	</div>
 	<div id="ModifyWindow" class="easyui-window" title="修改"
-		style="width:350px;height:600px;">
+		">
 		<form id="form1" style="padding:10px 20px 10px 40px;">
 			<p>
 				<input id="id1" name="id" type="hidden">
@@ -425,22 +444,23 @@
 				登录名: <input id="loginName1" readonly="readonly" name="loginName" type="text">
 			</p>
 			<p>
-				姓名: <input id="displayName1" name="displayName" type="text">
+				姓名: <input id="displayName1" name="displayName" class="easyui-textbox" data-options="required:true"
+							missingMessage="姓名不能空"  type="text">
 			</p>
 			<p>
-				电话: <input id="contactPhone1" name="contactPhone" type="text">
+				电话: <input id="contactPhone1" name="contactPhone" class="easyui-textbox" data-options="required:true"
+							missingMessage="电话不能空" type="text">
 			</p>
 			<div>
 				<font size="3" style="">请选择角色:</font>
 			</div>
 			<br />
 			<div id="rolelistModify"></div>
-			<br>
-			<div style="wpadding:5px;text-align:center;">
+			<!-- <div style="wpadding:5px;text-align:center;">
 				<a href="javascript:save()" class="easyui-linkbutton" icon="icon-ok">Ok</a>
 				<a href="javascript:Cancel()" class="easyui-linkbutton"
 					icon="icon-cancel">Cancel</a>
-			</div>
+			</div> -->
 
 		</form>
 	</div>
