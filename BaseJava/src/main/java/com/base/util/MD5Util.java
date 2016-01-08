@@ -1,6 +1,8 @@
 package com.base.util;
 
 import java.security.MessageDigest;
+
+import org.apache.commons.codec.digest.DigestUtils;
 /**
  * 
  * @author limingxing
@@ -18,5 +20,8 @@ public class MD5Util {
 			e.getStackTrace();
 		}
 		return null;
+	}
+	public static String encrypt(String username, String password) {
+		return DigestUtils.md5Hex(username + "{" + password + "}");
 	}
 }

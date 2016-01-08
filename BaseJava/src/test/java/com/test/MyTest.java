@@ -17,7 +17,7 @@ public class MyTest {
 	private UserService userService;
 	@Test
 	public void test() {
-		
+		userService.updateState(3, 1);
 	}
 
 }

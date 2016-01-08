@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50096
 File Encoding         : 65001
 
-Date: 2016-01-05 11:22:07
+Date: 2016-01-08 14:41:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3586,13 +3586,14 @@ CREATE TABLE `sys_user` (
   `update_time` timestamp NULL default NULL on update CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `login_name` (`login_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'limingxing', 'e10adc3949ba59abbe56e057f20f883e', 'limingxing', 'normal', '1', null, null, null, '3', null, null, '7777', null, null, '2015-12-23 16:49:50');
-INSERT INTO `sys_user` VALUES ('2', 'liyang', 'e10adc3949ba59abbe56e057f20f883e', '李杨', 'normal', '1', null, null, null, '3', null, null, '0000', null, null, '2015-12-23 16:49:52');
+INSERT INTO `sys_user` VALUES ('1', 'limingxing', '58d72aa8a321f6cc40b5802baf4b772d', 'limingxing', 'normal', '1', null, null, null, '3', null, null, '7777', null, null, '2016-01-08 14:40:46');
+INSERT INTO `sys_user` VALUES ('2', 'liyang', 'd087e8fd07ca7e8b309356fe552b2a02', '李杨', 'normal', '1', null, null, null, '3', null, null, '0000', null, null, '2016-01-08 13:14:31');
+INSERT INTO `sys_user` VALUES ('3', 'test', '9279c93baf0c0fe8614526605e7d68c5', 'asdfd', 'normal', '1', null, null, null, '3', null, null, '123123123', null, null, '2016-01-08 14:31:51');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -3609,119 +3610,5 @@ CREATE TABLE `sys_user_role` (
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES ('2', '2');
+INSERT INTO `sys_user_role` VALUES ('3', '1');
 INSERT INTO `sys_user_role` VALUES ('1', '1');
-
--- ----------------------------
--- Table structure for s_user
--- ----------------------------
-DROP TABLE IF EXISTS `s_user`;
-CREATE TABLE `s_user` (
-  `id` int(10) NOT NULL auto_increment,
-  `username` varchar(50) default NULL,
-  `password` varchar(50) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of s_user
--- ----------------------------
-INSERT INTO `s_user` VALUES ('1', 'limingxing0', 'limx0');
-INSERT INTO `s_user` VALUES ('2', 'limingxing1', 'limx1');
-INSERT INTO `s_user` VALUES ('3', 'limingxing2', 'limx2');
-INSERT INTO `s_user` VALUES ('4', 'limingxing3', 'limx3');
-INSERT INTO `s_user` VALUES ('5', 'limingxing4', 'limx4');
-INSERT INTO `s_user` VALUES ('6', 'limingxing5', 'limx5');
-INSERT INTO `s_user` VALUES ('7', 'limingxing6', 'limx6');
-INSERT INTO `s_user` VALUES ('8', 'limingxing7', 'limx7');
-INSERT INTO `s_user` VALUES ('9', 'limingxing8', 'limx8');
-INSERT INTO `s_user` VALUES ('10', 'limingxing9', 'limx9');
-INSERT INTO `s_user` VALUES ('11', 'limingxing10', 'limx10');
-INSERT INTO `s_user` VALUES ('12', 'limingxing11', 'limx11');
-INSERT INTO `s_user` VALUES ('13', 'limingxing12', 'limx12');
-INSERT INTO `s_user` VALUES ('14', 'limingxing13', 'limx13');
-INSERT INTO `s_user` VALUES ('15', 'limingxing14', 'limx14');
-INSERT INTO `s_user` VALUES ('16', 'limingxing15', 'limx15');
-INSERT INTO `s_user` VALUES ('17', 'limingxing16', 'limx16');
-INSERT INTO `s_user` VALUES ('18', 'limingxing17', 'limx17');
-INSERT INTO `s_user` VALUES ('19', 'limingxing18', 'limx18');
-INSERT INTO `s_user` VALUES ('20', 'limingxing19', 'limx19');
-INSERT INTO `s_user` VALUES ('21', 'limingxing20', 'limx20');
-INSERT INTO `s_user` VALUES ('22', 'limingxing21', 'limx21');
-INSERT INTO `s_user` VALUES ('23', 'limingxing22', 'limx22');
-INSERT INTO `s_user` VALUES ('24', 'limingxing23', 'limx23');
-INSERT INTO `s_user` VALUES ('25', 'limingxing24', 'limx24');
-INSERT INTO `s_user` VALUES ('26', 'limingxing25', 'limx25');
-INSERT INTO `s_user` VALUES ('27', 'limingxing26', 'limx26');
-INSERT INTO `s_user` VALUES ('28', 'limingxing27', 'limx27');
-INSERT INTO `s_user` VALUES ('29', 'limingxing28', 'limx28');
-INSERT INTO `s_user` VALUES ('30', 'limingxing29', 'limx29');
-INSERT INTO `s_user` VALUES ('31', 'limingxing30', 'limx30');
-INSERT INTO `s_user` VALUES ('32', 'limingxing31', 'limx31');
-INSERT INTO `s_user` VALUES ('33', 'limingxing32', 'limx32');
-INSERT INTO `s_user` VALUES ('34', 'limingxing33', 'limx33');
-INSERT INTO `s_user` VALUES ('35', 'limingxing34', 'limx34');
-INSERT INTO `s_user` VALUES ('36', 'limingxing35', 'limx35');
-INSERT INTO `s_user` VALUES ('37', 'limingxing36', 'limx36');
-INSERT INTO `s_user` VALUES ('38', 'limingxing37', 'limx37');
-INSERT INTO `s_user` VALUES ('39', 'limingxing38', 'limx38');
-INSERT INTO `s_user` VALUES ('40', 'limingxing39', 'limx39');
-INSERT INTO `s_user` VALUES ('41', 'limingxing40', 'limx40');
-INSERT INTO `s_user` VALUES ('42', 'limingxing41', 'limx41');
-INSERT INTO `s_user` VALUES ('43', 'limingxing42', 'limx42');
-INSERT INTO `s_user` VALUES ('44', 'limingxing43', 'limx43');
-INSERT INTO `s_user` VALUES ('45', 'limingxing44', 'limx44');
-INSERT INTO `s_user` VALUES ('46', 'limingxing45', 'limx45');
-INSERT INTO `s_user` VALUES ('47', 'limingxing46', 'limx46');
-INSERT INTO `s_user` VALUES ('48', 'limingxing47', 'limx47');
-INSERT INTO `s_user` VALUES ('49', 'limingxing48', 'limx48');
-INSERT INTO `s_user` VALUES ('50', 'limingxing49', 'limx49');
-INSERT INTO `s_user` VALUES ('51', 'limingxing50', 'limx50');
-INSERT INTO `s_user` VALUES ('52', 'limingxing51', 'limx51');
-INSERT INTO `s_user` VALUES ('53', 'limingxing52', 'limx52');
-INSERT INTO `s_user` VALUES ('54', 'limingxing53', 'limx53');
-INSERT INTO `s_user` VALUES ('55', 'limingxing54', 'limx54');
-INSERT INTO `s_user` VALUES ('56', 'limingxing55', 'limx55');
-INSERT INTO `s_user` VALUES ('57', 'limingxing56', 'limx56');
-INSERT INTO `s_user` VALUES ('58', 'limingxing57', 'limx57');
-INSERT INTO `s_user` VALUES ('59', 'limingxing58', 'limx58');
-INSERT INTO `s_user` VALUES ('60', 'limingxing59', 'limx59');
-INSERT INTO `s_user` VALUES ('61', 'limingxing60', 'limx60');
-INSERT INTO `s_user` VALUES ('62', 'limingxing61', 'limx61');
-INSERT INTO `s_user` VALUES ('63', 'limingxing62', 'limx62');
-INSERT INTO `s_user` VALUES ('64', 'limingxing63', 'limx63');
-INSERT INTO `s_user` VALUES ('65', 'limingxing64', 'limx64');
-INSERT INTO `s_user` VALUES ('66', 'limingxing65', 'limx65');
-INSERT INTO `s_user` VALUES ('67', 'limingxing66', 'limx66');
-INSERT INTO `s_user` VALUES ('68', 'limingxing67', 'limx67');
-INSERT INTO `s_user` VALUES ('69', 'limingxing68', 'limx68');
-INSERT INTO `s_user` VALUES ('70', 'limingxing69', 'limx69');
-INSERT INTO `s_user` VALUES ('71', 'limingxing70', 'limx70');
-INSERT INTO `s_user` VALUES ('72', 'limingxing71', 'limx71');
-INSERT INTO `s_user` VALUES ('73', 'limingxing72', 'limx72');
-INSERT INTO `s_user` VALUES ('74', 'limingxing73', 'limx73');
-INSERT INTO `s_user` VALUES ('75', 'limingxing74', 'limx74');
-INSERT INTO `s_user` VALUES ('76', 'limingxing75', 'limx75');
-INSERT INTO `s_user` VALUES ('77', 'limingxing76', 'limx76');
-INSERT INTO `s_user` VALUES ('78', 'limingxing77', 'limx77');
-INSERT INTO `s_user` VALUES ('79', 'limingxing78', 'limx78');
-INSERT INTO `s_user` VALUES ('80', 'limingxing79', 'limx79');
-INSERT INTO `s_user` VALUES ('81', 'limingxing80', 'limx80');
-INSERT INTO `s_user` VALUES ('82', 'limingxing81', 'limx81');
-INSERT INTO `s_user` VALUES ('83', 'limingxing82', 'limx82');
-INSERT INTO `s_user` VALUES ('84', 'limingxing83', 'limx83');
-INSERT INTO `s_user` VALUES ('85', 'limingxing84', 'limx84');
-INSERT INTO `s_user` VALUES ('86', 'limingxing85', 'limx85');
-INSERT INTO `s_user` VALUES ('87', 'limingxing86', 'limx86');
-INSERT INTO `s_user` VALUES ('88', 'limingxing87', 'limx87');
-INSERT INTO `s_user` VALUES ('89', 'limingxing88', 'limx88');
-INSERT INTO `s_user` VALUES ('90', 'limingxing89', 'limx89');
-INSERT INTO `s_user` VALUES ('91', 'limingxing90', 'limx90');
-INSERT INTO `s_user` VALUES ('92', 'limingxing91', 'limx91');
-INSERT INTO `s_user` VALUES ('93', 'limingxing92', 'limx92');
-INSERT INTO `s_user` VALUES ('94', 'limingxing93', 'limx93');
-INSERT INTO `s_user` VALUES ('95', 'limingxing94', 'limx94');
-INSERT INTO `s_user` VALUES ('96', 'limingxing95', 'limx95');
-INSERT INTO `s_user` VALUES ('97', 'limingxing96', 'limx96');
-INSERT INTO `s_user` VALUES ('98', 'limingxing97', 'limx97');
-INSERT INTO `s_user` VALUES ('99', 'limingxing98', 'limx98');
-INSERT INTO `s_user` VALUES ('100', 'limingxing99', 'limx99');

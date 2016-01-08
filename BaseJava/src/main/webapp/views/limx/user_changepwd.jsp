@@ -18,17 +18,20 @@
 			<tr style="height: 30px;">
 				<td style="padding-right: 25px;"><span style="color: red;">*</span>原密码:</td>
 				<td><input name="pwd" id="pwd" type="password"
-					style="width: 180px;" class="my_input"></td>
+					style="width: 180px;" class="easyui-textbox" data-options="required:true" validType="length[5,10]" invalidMessage="长度必须在5-10之间" 
+							missingMessage="旧密码不能为空"></td>
 			</tr>
 			<tr style="height: 30px;">
 				<td><span style="color: red;">*</span>新密码:</td>
 				<td><input name="passwordTxt" id="passwordTxt" type="password"
-					style="width: 180px;" class="my_input"></td>
+					style="width: 180px;" class="easyui-textbox" data-options="required:true" validType="length[5,10]" invalidMessage="长度必须在5-10之间" 
+							missingMessage="新密码不能为空"></td>
 			</tr>
 			<tr style="height: 30px;">
 				<td><span style="color: red;">*</span>确认密码:</td>
 				<td><input name="password" id="password" type="password"
-					style="width: 180px;" class="my_input"></td>
+					style="width: 180px;" class="easyui-textbox" data-options="required:true" validType="equalTo['#passwordTxt']" 
+							missingMessage="确认密码不能为空"  invalidMessage="两次输入密码不匹配"></td>
 			</tr>
 		</table>
 	</form>
@@ -58,6 +61,16 @@
 				}
    		 });
 		}
+		$.extend($.fn.validatebox.defaults.rules, {  
+    /*必须和某个字段相等*/
+    equalTo: {
+        validator:function(value,param){
+            return $(param[0]).val() == value;
+        },
+        message:'字段不匹配'
+    }
+           
+});
 	</script>
 </body>
 </html>

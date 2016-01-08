@@ -1,4 +1,5 @@
 package com.base.controller;
+
 /**
  */
 import java.io.File;
@@ -27,6 +28,7 @@ import com.base.util.ResponseUtil;
 import com.base.util.UserUtil;
 import com.base.vo.UserRole;
 import com.github.pagehelper.PageInfo;
+
 /**
  * 
  * @author limingxing
@@ -125,7 +127,9 @@ public class UserController {
 		user.setLoginName(loginName);
 		user.setDisplayName(displayName);
 		user.setContactPhone(contactPhone);
+		password = MD5Util.encrypt(loginName, password);
 		user.setPassword(MD5Util.encode(password));
+
 		user.setType("1");
 		userService.insertUser(user);
 		if (roleIdAdd != null && roleIdAdd.length != 0) {
@@ -335,24 +339,57 @@ public class UserController {
 		return ResponseUtil.success(u.getDisplayName());
 
 	}
-	@RequestMapping(value = {"/changePwdinfo"})
-	public ModelAndView changePwdinfo(HttpSession session){
-		ModelAndView view=new ModelAndView("views/limx/user_changepwd");
+
+	@RequestMapping(value = { "/changePwdinfo" })
+	public ModelAndView changePwdinfo(HttpSession session) {
+		ModelAndView view = new ModelAndView("views/limx/user_changepwd");
 		return view;
 	}
-	@RequestMapping(value="/updatepassword")
+	/**
+	 * 个人修改
+	 * @param password
+	 * @param pwd
+	 * @return
+	 */
+	@RequestMapping(value = "/updatepassword")
 	@ResponseBody
-	public Object updatepassword(String password,String pwd){
-		password=MD5Util.encode(password);
-		pwd=MD5Util.encode(pwd);
-		String loginName=UserUtil.findSessionUser().getUsername();
-		String oldpassword=userService.findUserByLoginName(loginName).getPassword();
-		if(!pwd.equals(oldpassword)){
+	public Object updatepassword(String password, String pwd) {
+		password = MD5Util.encode(password);
+		pwd = MD5Util.encode(pwd);
+		String loginName = UserUtil.findSessionUser().getUsername();
+		pwd = MD5Util.encrypt(loginName, pwd);
+		password = MD5Util.encrypt(loginName, password);
+		String oldpassword = userService.findUserByLoginName(loginName)
+				.getPassword();
+		if (!pwd.equals(oldpassword)) {
 			return ResponseUtil.fail("请输入正确的原密码");
-		}else{
-		userService.updatePassword(loginName, pwd, password);
-		return ResponseUtil.success();
+		} else {
+			userService.updatePassword(loginName, pwd, password);
+			return ResponseUtil.success();
 		}
-		
+
+	}
+	/**
+	 * 
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value = "/updatepassword1")
+	@ResponseBody
+	public Object updatepassword1(String password, String loginName) {
+		password = MD5Util.encode(password);
+		password = MD5Util.encrypt(loginName, password);
+		userService.updatePassword(loginName, "", password);
+		return ResponseUtil.success();
+	}
+
+	@RequestMapping("/findbyloginname")
+	@ResponseBody
+	public Object findbyloginname(String loginName) {
+		User user = userService.findUserByLoginName(loginName);
+		if (user != null)
+			return false;
+		else
+			return true;
 	}
 }

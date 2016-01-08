@@ -42,6 +42,7 @@ public class MyAuthenticationFilter extends
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
 		password=MD5Util.encode(password);
+		password=MD5Util.encrypt(username, password);
 		username = username.trim();
 
 		UsernamePasswordAuthenticationToken authRequest = null;
@@ -54,15 +55,26 @@ public class MyAuthenticationFilter extends
 				BadCredentialsException exception = new BadCredentialsException(
 						"用户名或密码不匹配");
 				throw exception;
+			}else{
+				if(list.get(0).getState()==0){
+					BadCredentialsException exception = new BadCredentialsException(
+							"账号未激活");
+					throw exception;
+				}
 			}
 		} catch (Exception e) {
 			if(list==null||list.size()==0){
 				UsernameNotFoundException exception=new UsernameNotFoundException("用戶名不存在");
 				throw exception;
-			}else{
+			}else {
+				 if(list == null || !list.get(0).getPassword().equals(password)){
 			BadCredentialsException exception = new BadCredentialsException(
 					"用户名或密码不匹配");
-			throw exception;}
+			throw exception;}else if(list.get(0).getState()==0){
+				BadCredentialsException exception = new BadCredentialsException(
+						"账号未激活");
+				throw exception;
+			}}
 		}
 
 		// 实现验证

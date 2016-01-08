@@ -92,11 +92,13 @@ public class UserServiceimpl implements UserService {
 	public void updatePassword(String loginName, String oldPassword,
 			String password) {
 		User user = findUserByLoginName(loginName);
+		user.setPassword(password);
 		userDao.updatePassword(user);
 	}
 
 	public void updateState(int id, int state) {
-		state = state == ConstantUtil.OK ? ConstantUtil.FAIL : ConstantUtil.OK;
+		state = state == ConstantUtil.OK ? ConstantUtil.OK : ConstantUtil.FAIL;
+		System.out.println(state);
 		userDao.updateState(id, state);
 
 	}

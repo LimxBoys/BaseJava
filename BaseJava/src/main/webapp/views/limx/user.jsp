@@ -36,6 +36,16 @@
 	src="<%=basePath%>/resource/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(function() {
+		$.extend($.fn.validatebox.defaults.rules, {  
+	    /*必须和某个字段相等*/
+	    equalTo: {
+	        validator:function(value,param){
+	            return $(param[0]).val() == value;
+	        },
+	        message:'字段不匹配'
+	    }
+	           
+	});
 	$('#rolelistAdd').datagrid({
 	pagination : true,//分页控件  
 		fit : true,
@@ -137,11 +147,10 @@
 				iconCls : 'icon-add',
 				handler : function() {
 					$("#addWindow").window('open');
-					
-						$("#loginName2").val("");
-						$("#password2").val("");
-						$("#contactPhone2").val("");
-						$("#displayName2").val("");
+					$('#loginName2').textbox('setValue','');
+					$('#password2').textbox('setValue','');
+					$('#contactPhone2').textbox('setValue','');
+					$('#displayName2').textbox('setValue','');
 				}
 			}, {
 				text : '修改',
@@ -241,6 +250,23 @@
 					}
 					;
 				}
+			}, {
+				field : 'action',
+				title : '操作',
+				align:'center',
+				width : '15%',
+				formatter:function(value, row, index){
+				var textValue = '';
+				if (row.state == 1) {
+					//textValue = "<a style=\"color:blue;text-decoration:none;\" href=\"javascript:edit('"+rowData.orderId+"')\">编辑</a>";
+					textValue = '<a href="javascript:updatestate(0,'+row.id+');" style="text-decoration:none">冻结</a>';
+				} else if (row.state == 0) { 
+					//textValue = "<a style=\"color:blue;text-decoration:none;\" href=\"javascript:execution('"+rowData.taskId+"')\">流转节点</a>";
+					textValue='<a style="text-decoration:none" href="javascript:updatestate(1,'+row.id+');">激活</a>';
+				}
+				textValue+= '&nbsp;<a href="javascript:updatepassword(\''+row.loginName+'\');" style="text-decoration:none">密码修改</a>';
+				return textValue;
+				}
 			} ] ],
 			onCheck : function(rowIndex, rowData) {
 			}
@@ -294,6 +320,63 @@
 		$('#form2').submit();
 
 	}
+	/* 冻结激活 */
+	function updatestate(state,id){
+			$.ajax({
+						url:"<%=basePath%>/user/frozen.do",
+						data:{id:id,state:state},
+						dataType: "json",
+						type:"post",
+						success:function(data){
+							if(data.result){
+								$("#user").datagrid('reload');
+								if(state==0){
+								$.messager.alert('提示','冻结成功');    
+								}else{
+								$.messager.alert('提示','激活成功');   
+								}
+							}
+						}
+					});
+	}
+	function updatepassword(loginName){
+	$('#dialogpassword').show();
+		$('#dialogpassword').dialog({
+			title : '修改密码',
+			width : 350,
+			height : 200,
+			closed : false,
+			cache : false,
+			modal : true,
+		});
+		
+		$("#loginName").val(loginName);
+		$('#passwordTxt').textbox('setValue','');
+		$('#password').textbox('setValue','');
+	}
+	//关闭
+		function onClosePage() {
+			$('#dialogpassword').dialog('close');
+			$('#dialogpassword').hide();
+		}
+		//提交
+		function onSave(){
+			$('#update-changepwd').form('submit',{  
+				method:'post',
+				url:'<%=basePath%>/user/updatepassword1.do',
+				success: function(json) {
+				var json = eval('(' + json + ')');
+					if(json.result==true){
+				           $('#dialogpassword').dialog('close');
+				           $('#dialogpassword').hide();
+				           $.messager.alert('提示','修改成功');
+					}else{
+						$.messager.alert('提示',json.err);
+					}
+							
+				}
+   		 });
+		}
 	function Cancel() {
 		$("#ModifyWindow").window('close');
 		$("#addWindow").window('close');
@@ -302,14 +385,14 @@
 </head>
 
 <body>
-	<div id="user" style="height:1000px "></div>
+	<div id="user" style="height:100% "></div>
 	<div id="addWindow" class="easyui-window" title="添加"
 		style="width:350px;height:600px;">
 		<form id="form2" style="padding:10px 20px 10px 40px;">
 
 			<p>
-				登录名: <input id="loginName2" class="easyui-textbox" name="loginName" data-options="required:true"
-							missingMessage="登录名不能空" type="text">
+				登录名: <input id="loginName2" class="easyui-textbox" name="loginName" data-options="required:true" validType="remote['<%=basePath%>/user/findbyloginname.do','loginName']" 
+							missingMessage="登录名不能空" invalidMessage="用户名已存在" type="text" >
 			</p>
 			<p>
 				密码: <input id="password2" class="easyui-textbox" name="password" data-options="required:true"
@@ -339,7 +422,7 @@
 				<input id="id1" name="id" type="hidden">
 			</p>
 			<p>
-				登录名: <input id="loginName1" name="loginName" type="text">
+				登录名: <input id="loginName1" readonly="readonly" name="loginName" type="text">
 			</p>
 			<p>
 				姓名: <input id="displayName1" name="displayName" type="text">
@@ -360,6 +443,29 @@
 			</div>
 
 		</form>
+	</div>
+	<div id="dialogpassword" style="display: none">
+		<form id="update-changepwd">
+		<table style="padding-left: 20px;padding-top: 10px;">
+			<tr style="height: 30px;">
+				<td><span style="color: red;">*</span>新密码:</td>
+				<td><input name="passwordTxt" id="passwordTxt" class="easyui-textbox" type="password"
+					style="width: 180px;"  data-options="required:true" validType="length[5,10]" invalidMessage="长度必须在5-10之间" 
+							missingMessage="新密码不能为空"></td>
+			</tr>
+			<tr style="height: 30px;">
+				<td><span style="color: red;">*</span>确认密码:</td>
+				<td><input name="password" id="password" type="password"
+					style="width: 180px;" class="easyui-textbox" data-options="required:true" validType="equalTo['#passwordTxt']" 
+							missingMessage="确认密码不能为空"  invalidMessage="两次输入密码不匹配"></td>
+			</tr>
+			<input name="loginName" id="loginName" type="hidden">
+		</table>
+	</form>
+	<div align="right" style="padding-top: 5px;padding-right: 30px;">
+			<button id="save" onclick="onSave();" class="easyui-linkbutton">保存</button>
+			<button id="closepage" onclick="onClosePage();" class="easyui-linkbutton">取消</button>
+	</div>
 	</div>
 </body>
 </html>
