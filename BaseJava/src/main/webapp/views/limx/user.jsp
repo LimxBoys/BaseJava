@@ -46,97 +46,7 @@
 	    }
 	           
 	});
-	$('#rolelistAdd').datagrid({
-	pagination : true,//分页控件  
-		fit : true,
-		fitColumns : true,
-		rownumbers : true,
-		pageSize : 10,
-		idField : '',//指定列biaoshi
-		pageList : [ 10, 20, 30, 40, 50 ],
-		frozenColumns : [ [ {
-			field : 'roleId',
-			width : 10,
-			align : 'center',
-			checkbox : true
-		} ] ],
-		url : '<%=basePath%>/role/list.do',
-		columns : [ [
-				{
-					field : 'roleName',
-					title : '角色名称',
-					align : 'center'
-				},
-				{
-					field : 'description',
-					title : '角色描述',
-					align : 'center'
-				}
-				
-				]]});
-	
-	
-	$('#rolelistModify').datagrid({
-	pagination : true,//分页控件  
-		fit : true,
-		fitColumns : true,
-		height:200,
-		rownumbers : true,
-		pageSize : 10,
-		idField : '',//指定列biaoshi
-		pageList : [ 10, 20, 30, 40, 50 ],
-		frozenColumns : [ [ {
-			field : 'roleId',
-			width : 10,
-			align : 'center',
-			checkbox : true
-		} ] ],
-		url : '<%=basePath%>/role/list.do',
-		columns : [ [
-				{
-					field : 'roleName',
-					title : '角色名称',
-					align : 'center'
-				},
-				{
-					field : 'description',
-					title : '角色描述',
-					align : 'center'
-				}
-				
-				]],
-				onLoadSuccess:function(data){
-				var b=$("#user").datagrid('getSelections');
-				var user=b[0];
-				if(b!=null&&b.length!=0){
-					$.ajax({
-						url:"<%=basePath%>/user/roleList.do",
-						data:{id:user.id},
-						dataType: "json",
-						type:"get",
-						success:function(data){
-							$.each(data,function(index,obj){
-							if(obj.checked){
-								var roleId=obj.id;
-								var rolelist=$("#rolelistModify").datagrid("getRows");
-				            	for(var i=0;i<rolelist.length;i++){
-				            		var roleIdold=rolelist[i].id;
-				            		if(roleIdold==roleId){
-				            			$("#rolelistModify").datagrid('checkRow',i);
-				            		}
-				            	}
-							}
-							});
-						}
-					});
-				}}
-				});
-	
-	
-	
-		$("#ModifyWindow").dialog('close');
-		$("#addWindow").dialog('close');
-		$('#user').datagrid({
+	$('#user').datagrid({
     url:'<%=basePath%>/user/list.do',
 			pageSize : 20,
 			pageNumber : 1,
@@ -155,12 +65,18 @@
 		    			height: 600,  
 						buttons:[
 						{text:'保存',handler:function(){add();}},
-						{text:'关闭',handler:function(){Cancel();}}
+						{text:'关闭',handler:function(){Canceladd();}}
 						]});
 					$('#loginName2').textbox('setValue','');
 					$('#password2').textbox('setValue','');
 					$('#contactPhone2').textbox('setValue','');
 					$('#displayName2').textbox('setValue','');
+					if($("#rolelistAdd").length==0){
+						$("#rolelistAdd1").append("<div id='rolelistAdd'></div>");
+					rolelistAdddatagrid();}else{
+						$("rolelistAdd").datagrid("reload");
+					}
+					
 				}
 			}, {
 				text : '修改',
@@ -177,14 +93,17 @@
 		    			height: 600,  
 						buttons:[
 						{text:'保存',handler:function(){save();}},
-						{text:'关闭',handler:function(){Cancel();}}
+						{text:'关闭',handler:function(){CancelModify();}}
 						]});
 						var user=b[0];
 						$("#id1").val(user.id);
 						$("#loginName1").val(user.loginName);
 						$('#contactPhone1').textbox('setValue',user.contactPhone);
 						$('#displayName1').textbox('setValue',user.displayName);
-						$('#rolelistModify').datagrid("reload");
+						if($("#rolelistModify").length==0){
+							$("#rolelistModify1").append("<div id='rolelistModify'></div>");
+						rolelistModifydatagrid();}else{
+						$('#rolelistModify').datagrid("reload");}
 					}else if(b.length>1){
 						jQuery.messager.alert('提示','请正确选择要编辑的行');
 					}
@@ -289,6 +208,95 @@
 			onCheck : function(rowIndex, rowData) {
 			}
 		});
+		function rolelistAdddatagrid(){
+		$('#rolelistAdd').datagrid({
+	pagination : true,//分页控件  
+		fit : true,
+		fitColumns : true,
+		rownumbers : true,
+		pageSize : 10,
+		idField : '',//指定列biaoshi
+		pageList : [ 10, 20, 30, 40, 50 ],
+		frozenColumns : [ [ {
+			field : 'roleId',
+			width : 10,
+			align : 'center',
+			checkbox : true
+		} ] ],
+		url : '<%=basePath%>/role/list.do',
+		columns : [ [
+				{
+					field : 'roleName',
+					title : '角色名称',
+					align : 'center'
+				},
+				{
+					field : 'description',
+					title : '角色描述',
+					align : 'center'
+				}
+				
+				]]});
+		}
+	
+	function rolelistModifydatagrid(){
+	$('#rolelistModify').datagrid({
+	pagination : true,//分页控件  
+		fit : true,
+		fitColumns : true,
+		height:200,
+		rownumbers : true,
+		pageSize : 10,
+		idField : '',//指定列biaoshi
+		pageList : [ 10, 20, 30, 40, 50 ],
+		frozenColumns : [ [ {
+			field : 'roleId',
+			width : 10,
+			align : 'center',
+			checkbox : true
+		} ] ],
+		url : '<%=basePath%>/role/list.do',
+		columns : [ [
+				{
+					field : 'roleName',
+					title : '角色名称',
+					align : 'center'
+				},
+				{
+					field : 'description',
+					title : '角色描述',
+					align : 'center'
+				}
+				
+				]],
+				onLoadSuccess:function(data){
+				var b=$("#user").datagrid('getSelections');
+				var user=b[0];
+				if(b!=null&&b.length!=0){
+					$.ajax({
+						url:"<%=basePath%>/user/roleList.do",
+						data:{id:user.id},
+						dataType: "json",
+						type:"get",
+						success:function(data){
+							$.each(data,function(index,obj){
+							if(obj.checked){
+								var roleId=obj.id;
+								var rolelist=$("#rolelistModify").datagrid("getRows");
+				            	for(var i=0;i<rolelist.length;i++){
+				            		var roleIdold=rolelist[i].id;
+				            		if(roleIdold==roleId){
+				            			$("#rolelistModify").datagrid('checkRow',i);
+				            		}
+				            	}
+							}
+							});
+						}
+					});
+				}}
+				});
+	}
+	
 	});
 	function save(){
 	var roleIds = [];
@@ -397,17 +405,20 @@
 				}
    		 });
 		}
-	function Cancel() {
-		$("#ModifyWindow").dialog('close');
+	function Canceladd() {
 		$("#addWindow").dialog('close');
+		
+	}
+	function CancelModify() {
+		$("#ModifyWindow").dialog('close');
+		
 	}
 </script>
 </head>
 
 <body>
 	<div id="user" style="height:100% "></div>
-	<div id="addWindow" class="easyui-window" title="添加"
-		style="width:350px">
+	<div id="addWindow">
 		<form id="form2" style="padding:10px 20px 10px 40px;">
 
 			<p>
@@ -426,7 +437,11 @@
 				电话: <input id="contactPhone2" class="easyui-textbox" name="contactPhone" data-options="required:true"
 							missingMessage="电话不能空" type="text">
 			</p>
-			<div id="rolelistAdd" style="height: 400"></div>
+			<div>
+				<font size="3" style="">请选择角色:</font>
+			</div>
+			<br />
+			<div id="rolelistAdd1" style="height: 400"></div>
 			<!-- <br>
 			<div style="padding:5px;text-align:center;">
 				<a href="javascript:add()" class="easyui-linkbutton" icon="icon-ok">Ok</a>
@@ -435,8 +450,7 @@
 			</div> -->
 		</form>
 	</div>
-	<div id="ModifyWindow" class="easyui-window" title="修改"
-		">
+	<div id="ModifyWindow">
 		<form id="form1" style="padding:10px 20px 10px 40px;">
 			<p>
 				<input id="id1" name="id" type="hidden">
@@ -456,7 +470,7 @@
 				<font size="3" style="">请选择角色:</font>
 			</div>
 			<br />
-			<div id="rolelistModify"></div>
+			<div id="rolelistModify1" style="height: 400"></div>
 			<!-- <div style="wpadding:5px;text-align:center;">
 				<a href="javascript:save()" class="easyui-linkbutton" icon="icon-ok">Ok</a>
 				<a href="javascript:Cancel()" class="easyui-linkbutton"
