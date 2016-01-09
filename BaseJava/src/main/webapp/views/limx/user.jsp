@@ -140,6 +140,7 @@
     url:'<%=basePath%>/user/list.do',
 			pageSize : 20,
 			pageNumber : 1,
+			fit:true,
 			pagination : true,
 			idField : 'id', //主键
 			singleSelect:true,
