@@ -95,7 +95,7 @@ public class MyTest {
 	}
 	@Test
 	public void test12(){
-		System.out.println(MD5Util.encode("limingxing"));
+		System.out.println(MD5Util.encode("123456"));
 	}
 }
 */
