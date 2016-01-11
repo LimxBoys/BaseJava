@@ -41,7 +41,7 @@
 		    url:'<%=basePath%>/role/listall.do',    
 		    valueField:'id',    
 		    textField:'text',
-		    value : "请选择角色",  
+		    value : "0",  
 		    onSelect:function(rec){
 		    $('#user').datagrid('load', {
 						roleId:rec.id,

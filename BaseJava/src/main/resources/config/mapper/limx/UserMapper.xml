@@ -140,7 +140,7 @@
 			<if test="condition.displayName!= null and condition.displayName!= '' ">
 				and display_name like CONCAT(CONCAT('%', #{condition.displayName}),'%')
 			</if>
-			<if test="condition.roleId!= null">
+			<if test="condition.roleId!= null and condition.roleId!=0">
 				and ur.role_id=#{condition.roleId}
 			</if>
 		</where>

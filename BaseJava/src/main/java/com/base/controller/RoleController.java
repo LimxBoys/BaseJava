@@ -125,6 +125,10 @@ public class RoleController {
 				.packageSearchCondion(request);
 		List<Role> listrole= roleService.findAllEffectiveRoles();
 		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
+		Map<String, Object> map1=new HashMap<String, Object>();
+		map1.put("id", 0);
+		map1.put("text", "请选择角色");
+		list.add(map1);
 		if(listrole!=null&&listrole.size()!=0){
 			for(Role role:listrole){
 				Map<String, Object> map=new HashMap<String, Object>();
@@ -132,8 +136,8 @@ public class RoleController {
 				map.put("text", role.getDescription());
 				list.add(map);
 			}
-			
 		}
+		
 		return list;
 	}
 
