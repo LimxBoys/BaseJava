@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.base.model.User;
+import com.base.vo.Criteria;
 import com.base.vo.UserRole;
 import com.github.pagehelper.PageInfo;
 /**
@@ -119,7 +120,7 @@ public interface UserService {
 	 * @return PageInfo<User> 返回类型
 	 * @throws
 	 */
-	public PageInfo<User> findUserList(User user, int pageNum, int pageSize);
+	public PageInfo<User> findUserList(Criteria c, int pageNum, int pageSize);
 
 	/**
 	 * 

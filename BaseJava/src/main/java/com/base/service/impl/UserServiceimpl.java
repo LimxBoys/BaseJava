@@ -18,6 +18,7 @@ import com.base.model.Role;
 import com.base.model.User;
 import com.base.service.UserService;
 import com.base.util.ConstantUtil;
+import com.base.vo.Criteria;
 import com.base.vo.UserRole;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -126,10 +127,10 @@ public class UserServiceimpl implements UserService {
 		return page;
 	}
 
-	public PageInfo<User> findUserList(User user, int pageNum, int pageSize) {
+	public PageInfo<User> findUserList(Criteria c, int pageNum, int pageSize) {
 
 		PageHelper.startPage(pageNum, pageSize);
-		List<User> list = userDao.findUserListByQuery(user);
+		List<User> list = userDao.findUserListByQuery(c);
 		PageInfo<User> page = new PageInfo<User>(list);
 		return page;
 	}

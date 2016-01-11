@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.base.model.User;
+import com.base.vo.Criteria;
 /**
  * 
  * @author limingxing
@@ -110,7 +111,7 @@ public interface UserDao {
     * @return List<User>    返回类型
     * @throws
      */
-    public List<User> findUserListByQuery(User user);
+    public List<User> findUserListByQuery(Criteria c);
     
     /**
      * 

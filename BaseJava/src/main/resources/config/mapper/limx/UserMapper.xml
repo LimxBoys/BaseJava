@@ -127,18 +127,21 @@
 	</select>
 
 	<!-- 用户条件查询 -->
-	<select id="findUserListByQuery" parameterType="User"
+	<select id="findUserListByQuery" parameterType="com.base.vo.Criteria"
 		resultMap="UserMap">
 		select
 		id,login_name,display_name,type,state,email,contact_phone
-		from sys_user
+		from sys_user u INNER JOIN sys_user_role ur ON ur.user_id=u.id
 
 		<where>
-			<if test="loginName!=null and loginName!='' ">
-				login_name like CONCAT(CONCAT('%', #{loginName}),'%')
+			<if test="condition.loginName!=null and condition.loginName!='' ">
+				login_name like CONCAT(CONCAT('%', #{condition.loginName}),'%')
 			</if>
-			<if test="displayName!= null and displayName!= '' ">
-				and display_name like CONCAT(CONCAT('%', #{displayName}),'%')
+			<if test="condition.displayName!= null and condition.displayName!= '' ">
+				and display_name like CONCAT(CONCAT('%', #{condition.displayName}),'%')
+			</if>
+			<if test="condition.roleId!= null">
+				and ur.role_id=#{condition.roleId}
 			</if>
 		</where>
 

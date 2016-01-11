@@ -36,6 +36,21 @@
 	src="<%=basePath%>/resource/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(function() {
+	
+			$('#rolealllist').combobox({    
+		    url:'<%=basePath%>/role/listall.do',    
+		    valueField:'id',    
+		    textField:'text',
+		    value : "请选择角色",  
+		    onSelect:function(rec){
+		    $('#user').datagrid('load', {
+						roleId:rec.id,
+						loginName: $('#accountSearcher').searchbox("getValue")
+					});
+		    } 
+		});  
+
+	
 		$.extend($.fn.validatebox.defaults.rules, {  
 	    /*必须和某个字段相等*/
 	    equalTo: {
@@ -46,6 +61,15 @@
 	    }
 	           
 	});
+	$('#accountSearcher').searchbox({ 
+				prompt:'请输入账号',
+				searcher:function(value,name){ 
+					$('#user').datagrid('load', {
+						loginName: value,
+						roleId:$("#rolealllist").combobox("getValue")
+					});
+				}
+			});
 	$('#user').datagrid({
     url:'<%=basePath%>/user/list.do',
 			pageSize : 20,
@@ -54,95 +78,7 @@
 			pagination : true,
 			idField : 'id', //主键
 			singleSelect:true,
-			toolbar : [ {
-				text : 'Add',
-				iconCls : 'icon-add',
-				handler : function() {
-					$("#addWindow").dialog({
-						modal:true,
-						title:'新增',
-						width: 400,    
-		    			height: 600,  
-						buttons:[
-						{text:'保存',handler:function(){add();}},
-						{text:'关闭',handler:function(){Canceladd();}}
-						]});
-					$('#loginName2').textbox('setValue','');
-					$('#password2').textbox('setValue','');
-					$('#contactPhone2').textbox('setValue','');
-					$('#displayName2').textbox('setValue','');
-					if($("#rolelistAdd").length==0){
-						$("#rolelistAdd1").append("<div id='rolelistAdd'></div>");
-					rolelistAdddatagrid();}else{
-						$("#rolelistAdd").datagrid("reload");
-					}
-					
-				}
-			}, {
-				text : '修改',
-				iconCls : 'icon-add',
-				handler : function() {
-					var b=$("#user").datagrid('getSelections');
-					if(b.length==0){
-						jQuery.messager.alert('提示','请选择要编辑的行');
-					}else if(b.length==1){
-						$("#ModifyWindow").dialog({
-						modal:true,
-						title:'修改',
-						width: 400,    
-		    			height: 600,  
-						buttons:[
-						{text:'保存',handler:function(){save();}},
-						{text:'关闭',handler:function(){CancelModify();}}
-						]});
-						var user=b[0];
-						$("#id1").val(user.id);
-						$("#loginName1").val(user.loginName);
-						$('#contactPhone1').textbox('setValue',user.contactPhone);
-						$('#displayName1').textbox('setValue',user.displayName);
-						if($("#rolelistModify").length==0){
-							$("#rolelistModify1").append("<div id='rolelistModify'></div>");
-						rolelistModifydatagrid();}else{
-						$('#rolelistModify').datagrid("reload");}
-					}else if(b.length>1){
-						jQuery.messager.alert('提示','请正确选择要编辑的行');
-					}
-					
-				}	
-			}, {
-				text : '删除',
-				iconCls : 'icon-add',
-				handler : function() {
-					var b=$("#user").datagrid('getSelections');
-					var ids=new Array();
-					if(b==null||b.length==0){
-						jQuery.messager.alert('提示:','请选择需要删除的行!');   
-					}else{
-						jQuery.messager.confirm('提示:','你确认要删除吗?',function(event){   
-						if(event){
-						$.each(b,function(index,obj){
-						ids[index] = obj.id;
-						});
-						$.ajax({ url:"<%=basePath%>	/user/deleteAll.do",
-								data : {
-									ids : ids,
-									loginName:"fasd"
-								},
-								type : "get",
-								dataType : "json",
-								success : function(data) {
-									if(data.result){
-										$("#user").datagrid('reload');
-									}
-								}
-							});
-					 
-					}else{   
-							}   
-						});  
-					}
-				}
-			} ],
+			toolbar :"#storetbar",
 			columns : [ [ {
 				field : 'id',
 				width : 100,
@@ -208,99 +144,7 @@
 			onCheck : function(rowIndex, rowData) {
 			}
 		});
-		function rolelistAdddatagrid(){
-		$('#rolelistAdd').datagrid({
-	pagination : true,//分页控件  
-		fit : true,
-		fitColumns : true,
-		rownumbers : true,
-		pageSize : 10,
-		idField : '',//指定列biaoshi
-		pageList : [ 10, 20, 30, 40, 50 ],
-		frozenColumns : [ [ {
-			field : 'roleId',
-			width : 10,
-			align : 'center',
-			checkbox : true
-		} ] ],
-		url : '<%=basePath%>/role/list.do',
-		columns : [ [
-				{
-					field : 'roleName',
-					title : '角色名称',
-					align : 'center'
-				},
-				{
-					field : 'description',
-					title : '角色描述',
-					align : 'center'
-				}
-				
-				]],
-				onLoadSuccess:function(data){
-					/* $.each(data,function(index,obj){
-		            $("#rolelistAdd").datagrid('uncheckRow',index);
-					}); */
-				}});
-		}
-	
-	function rolelistModifydatagrid(){
-	$('#rolelistModify').datagrid({
-	pagination : true,//分页控件  
-		fit : true,
-		fitColumns : true,
-		height:200,
-		rownumbers : true,
-		pageSize : 10,
-		idField : '',//指定列biaoshi
-		pageList : [ 10, 20, 30, 40, 50 ],
-		frozenColumns : [ [ {
-			field : 'roleId',
-			width : 10,
-			align : 'center',
-			checkbox : true
-		} ] ],
-		url : '<%=basePath%>/role/list.do',
-		columns : [ [
-				{
-					field : 'roleName',
-					title : '角色名称',
-					align : 'center'
-				},
-				{
-					field : 'description',
-					title : '角色描述',
-					align : 'center'
-				}
-				
-				]],
-				onLoadSuccess:function(data){
-				var b=$("#user").datagrid('getSelections');
-				var user=b[0];
-				if(b!=null&&b.length!=0){
-					$.ajax({
-						url:"<%=basePath%>/user/roleList.do",
-						data:{id:user.id},
-						dataType: "json",
-						type:"get",
-						success:function(data){
-							$.each(data,function(index,obj){
-							if(obj.checked){
-								var roleId=obj.id;
-								var rolelist=$("#rolelistModify").datagrid("getRows");
-				            	for(var i=0;i<rolelist.length;i++){
-				            		var roleIdold=rolelist[i].id;
-				            		if(roleIdold==roleId){
-				            			$("#rolelistModify").datagrid('checkRow',i);
-				            		}
-				            	}
-							}
-							});
-						}
-					});
-				}}
-				});
-	}
+		
 	
 	});
 	function save(){
@@ -418,6 +262,179 @@
 		$("#ModifyWindow").dialog('close');
 		
 	}
+	/*新增  */
+	function adduser(){
+	$("#addWindow").dialog({
+						modal:true,
+						title:'新增',
+						width: 400,    
+		    			height: 600,  
+						buttons:[
+						{text:'保存',handler:function(){add();}},
+						{text:'关闭',handler:function(){Canceladd();}}
+						]});
+					$('#loginName2').textbox('setValue','');
+					$('#password2').textbox('setValue','');
+					$('#contactPhone2').textbox('setValue','');
+					$('#displayName2').textbox('setValue','');
+					if($("#rolelistAdd").length==0){
+						$("#rolelistAdd1").append("<div id='rolelistAdd'></div>");
+						rolelistAdddatagrid();
+						}else{
+						$("#rolelistAdd").datagrid("reload");
+					}
+	}
+	/*修改  */
+	function edituser(){
+	var b=$("#user").datagrid('getSelections');
+					if(b.length==0){
+						jQuery.messager.alert('提示','请选择要编辑的行');
+					}else if(b.length==1){
+						$("#ModifyWindow").dialog({
+						modal:true,
+						title:'修改',
+						width: 400,    
+		    			height: 600,  
+						buttons:[
+						{text:'保存',handler:function(){save();}},
+						{text:'关闭',handler:function(){CancelModify();}}
+						]});
+						var user=b[0];
+						$("#id1").val(user.id);
+						$("#loginName1").val(user.loginName);
+						$('#contactPhone1').textbox('setValue',user.contactPhone);
+						$('#displayName1').textbox('setValue',user.displayName);
+						if($("#rolelistModify").length==0){
+							$("#rolelistModify1").append("<div id='rolelistModify'></div>");
+						rolelistModifydatagrid();}else{
+						$('#rolelistModify').datagrid("reload");}
+					}else if(b.length>1){
+						jQuery.messager.alert('提示','请正确选择要编辑的行');
+					}
+	}
+	/*删除  */
+	function deleteuser(){
+	
+					var b=$("#user").datagrid('getSelections');
+					var ids=new Array();
+					if(b==null||b.length==0){
+						jQuery.messager.alert('提示:','请选择需要删除的行!');   
+					}else{
+						jQuery.messager.confirm('提示:','你确认要删除吗?',function(event){   
+						if(event){
+						$.each(b,function(index,obj){
+						ids[index] = obj.id;
+						});
+						$.ajax({ url:"<%=basePath%>	/user/deleteAll.do",
+								data : {
+									ids : ids,
+									loginName:"fasd"
+								},
+								type : "get",
+								dataType : "json",
+								success : function(data) {
+									if(data.result){
+										$("#user").datagrid('reload');
+									}
+								}
+							});
+						}  
+						});  
+					}
+	}
+	function rolelistAdddatagrid(){
+		$('#rolelistAdd').datagrid({
+		pagination : true,//分页控件  
+		fit : true,
+		fitColumns : true,
+		rownumbers : true,
+		pageSize : 10,
+		idField : '',//指定列biaoshi
+		pageList : [ 10, 20, 30, 40, 50 ],
+		frozenColumns : [ [ {
+			field : 'roleId',
+			width : 10,
+			align : 'center',
+			checkbox : true
+		} ] ],
+		url : '<%=basePath%>/role/list.do',
+		columns : [ [
+				{
+					field : 'roleName',
+					title : '角色名称',
+					align : 'center'
+				},
+				{
+					field : 'description',
+					title : '角色描述',
+					align : 'center'
+				}
+				
+				]],
+				onLoadSuccess:function(data){
+					/* $.each(data,function(index,obj){
+		            $("#rolelistAdd").datagrid('uncheckRow',index);
+					}); */
+				}});
+		}
+	
+	function rolelistModifydatagrid(){
+	$('#rolelistModify').datagrid({
+	pagination : true,//分页控件  
+		fit : true,
+		fitColumns : true,
+		height:200,
+		rownumbers : true,
+		pageSize : 10,
+		idField : '',//指定列biaoshi
+		pageList : [ 10, 20, 30, 40, 50 ],
+		frozenColumns : [ [ {
+			field : 'roleId',
+			width : 10,
+			align : 'center',
+			checkbox : true
+		} ] ],
+		url : '<%=basePath%>/role/list.do',
+		columns : [ [
+				{
+					field : 'roleName',
+					title : '角色名称',
+					align : 'center'
+				},
+				{
+					field : 'description',
+					title : '角色描述',
+					align : 'center'
+				}
+				
+				]],
+				onLoadSuccess:function(data){
+				var b=$("#user").datagrid('getSelections');
+				var user=b[0];
+				if(b!=null&&b.length!=0){
+					$.ajax({
+						url:"<%=basePath%>/user/roleList.do",
+						data:{id:user.id},
+						dataType: "json",
+						type:"get",
+						success:function(data){
+							$.each(data,function(index,obj){
+							if(obj.checked){
+								var roleId=obj.id;
+								var rolelist=$("#rolelistModify").datagrid("getRows");
+				            	for(var i=0;i<rolelist.length;i++){
+				            		var roleIdold=rolelist[i].id;
+				            		if(roleIdold==roleId){
+				            			$("#rolelistModify").datagrid('checkRow',i);
+				            		}
+				            	}
+							}
+							});
+						}
+					});
+				}}
+				});
+	}
 </script>
 </head>
 
@@ -507,5 +524,14 @@
 			<button id="closepage" onclick="onClosePage();" class="easyui-linkbutton">取消</button>
 	</div>
 	</div>
+	<div id="storetbar">
+	<a href="javascript:void(0)"  class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="javascript:adduser()">新增</a>
+	<a href="javascript:void(0)"  class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="javascript:edituser()">修改</a>
+	<a href="javascript:void(0)"  class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="javascript:deleteuser()">删除</a>
+	
+	 <div style="float: right;">
+	 <input id="rolealllist" style="width: 200px;">
+	 &nbsp;&nbsp;|&nbsp;&nbsp; 账户: <input id="accountSearcher" style="width:200px" />
+	 </div>
 </body>
 </html>

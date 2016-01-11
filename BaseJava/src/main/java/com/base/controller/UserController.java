@@ -26,6 +26,7 @@ import com.base.util.MD5Util;
 import com.base.util.PageUtil;
 import com.base.util.ResponseUtil;
 import com.base.util.UserUtil;
+import com.base.vo.Criteria;
 import com.base.vo.UserRole;
 import com.github.pagehelper.PageInfo;
 
@@ -323,11 +324,14 @@ public class UserController {
 	 */
 	@RequestMapping("/list")
 	public @ResponseBody
-	Object list(User user,
+	Object list(User user,@RequestParam(value="roleId",required=false)Integer roleId,
 			@RequestParam(defaultValue = "1", value = "pageNum") int pageNum,
 			@RequestParam(defaultValue = "15", value = "pageSize") int pageSize) {
-
-		PageInfo<User> page = userService.findUserList(user, pageNum, pageSize);
+		Criteria criteria=new Criteria();
+		criteria.put("roleId", roleId);
+		criteria.put("displayName", user.getDisplayName());
+		criteria.put("loginName", user.getLoginName());
+		PageInfo<User> page = userService.findUserList(criteria, pageNum, pageSize);
 		return PageUtil.convertGrid(page);
 	}
 
