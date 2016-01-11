@@ -74,7 +74,7 @@
 					if($("#rolelistAdd").length==0){
 						$("#rolelistAdd1").append("<div id='rolelistAdd'></div>");
 					rolelistAdddatagrid();}else{
-						$("rolelistAdd").datagrid("reload");
+						$("#rolelistAdd").datagrid("reload");
 					}
 					
 				}
@@ -236,7 +236,12 @@
 					align : 'center'
 				}
 				
-				]]});
+				]],
+				onLoadSuccess:function(data){
+					/* $.each(data,function(index,obj){
+		            $("#rolelistAdd").datagrid('uncheckRow',index);
+					}); */
+				}});
 		}
 	
 	function rolelistModifydatagrid(){
