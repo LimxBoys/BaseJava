@@ -102,7 +102,7 @@
 	<update id="updateUser" parameterType="User" flushCache="true">
 		update sys_user
         set display_name=#{displayName},
-         contact_phone=#{contactPhone},login_name=#{loginName}
+         contact_phone=#{contactPhone},login_name=#{loginName},email=#{email}
 		where id =
 		#{id}
 	</update>

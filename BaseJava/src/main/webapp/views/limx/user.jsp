@@ -36,6 +36,21 @@
 	src="<%=basePath%>/resource/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
 	$(function() {
+				$.extend($.fn.validatebox.defaults.rules, {   
+			    phoneNum: { //验证手机号  
+			        validator: function(value, param){
+			         return /^1[3-8]+\d{9}$/.test(value);
+			        },   
+			        message: '请输入正确的手机号码。'  
+			    },
+			   
+			    telNum:{ //既验证手机号，又验证座机号
+			      validator: function(value, param){
+			          return /(^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$)|(^((\d3)|(\d{3}\-))?(1[358]\d{9})$)/.test(value);
+			         },   
+			         message: '请输入正确的电话号码。'
+			    }  
+			});
 	
 			$('#rolealllist').combobox({    
 		    url:'<%=basePath%>/role/listall.do',    
@@ -75,6 +90,7 @@
 			pageSize : 20,
 			pageNumber : 1,
 			fit:true,
+			fitColumns:true,
 			pagination : true,
 			idField : 'id', //主键
 			singleSelect:true,
@@ -89,31 +105,37 @@
 				}
 			}, {
 				field : 'zhujian',
+				width : 100,
 				title : '编号',
-				width : '15%',
 				align:'center',
 				formatter : function(value, row, index) {
 					return index + 1;
 				}
 			}, {
 				field : 'loginName',
+				width : 100,
 				title : '登录名',
-				align:'center',
-				width : '15%'
+				align:'center'
 			}, {
 				field : 'displayName',
+				width : 100,
 				title : '姓名',
-				align:'center',
-				width : '15%'
+				align:'center'
 			}, {
-				field : 'contactPhone',
-				title : '电话',
+				field : 'email',
+				width : 100,
+				title : '邮箱',
 				align:'center',
 				width : '15%'
+			},{
+				field : 'contactPhone',
+				width : 100,
+				title : '电话',
+				align:'center'
 			}, {
 				field : 'state',
+				width : 100,
 				title : '状态',
-				width : '15%',
 				align:'center',
 				formatter : function(value, row, index) {
 					if (row.state == 1) {
@@ -126,8 +148,8 @@
 			}, {
 				field : 'action',
 				title : '操作',
+				width : 100,
 				align:'center',
-				width : '15%',
 				formatter:function(value, row, index){
 				var textValue = '';
 				if (row.state == 1) {
@@ -276,6 +298,7 @@
 					$('#loginName2').textbox('setValue','');
 					$('#password2').textbox('setValue','');
 					$('#contactPhone2').textbox('setValue','');
+					$('#email2').textbox('setValue','');
 					$('#displayName2').textbox('setValue','');
 					if($("#rolelistAdd").length==0){
 						$("#rolelistAdd1").append("<div id='rolelistAdd'></div>");
@@ -303,6 +326,7 @@
 						$("#id1").val(user.id);
 						$("#loginName1").val(user.loginName);
 						$('#contactPhone1').textbox('setValue',user.contactPhone);
+						$('#email1').textbox('setValue',user.email);
 						$('#displayName1').textbox('setValue',user.displayName);
 						if($("#rolelistModify").length==0){
 							$("#rolelistModify1").append("<div id='rolelistModify'></div>");
@@ -456,7 +480,11 @@
 							missingMessage="姓名不能空" type="text">
 			</p>
 			<p>
-				电话: <input id="contactPhone2" class="easyui-textbox" name="contactPhone" data-options="required:true"
+				邮箱: <input id="email2" class="easyui-textbox" validType='email' name="email" data-options="required:true"
+							missingMessage="邮箱不能为空" invalidMessage="请输入正确的邮箱" type="text">
+			</p>
+			<p>
+				电话: <input id="contactPhone2" class="easyui-textbox" validType='phoneNum' name="contactPhone" data-options="required:true"
 							missingMessage="电话不能空" type="text">
 			</p>
 			<div>
@@ -485,7 +513,11 @@
 							missingMessage="姓名不能空"  type="text">
 			</p>
 			<p>
-				电话: <input id="contactPhone1" name="contactPhone" class="easyui-textbox" data-options="required:true"
+				邮箱: <input id="email1" class="easyui-textbox" validType='email' name="email" data-options="required:true"
+							missingMessage="邮箱不能为空" invalidMessage="请输入正确的邮箱" type="text">
+			</p>
+			<p>
+				电话: <input id="contactPhone1" name="contactPhone" class="easyui-textbox" validType='phoneNum' data-options="required:true"
 							missingMessage="电话不能空" type="text">
 			</p>
 			<div>
@@ -530,7 +562,7 @@
 	<a href="javascript:void(0)"  class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="javascript:deleteuser()">删除</a>
 	
 	 <div style="float: right;">
-	 <input id="rolealllist" style="width: 200px;">
+	 请选择角色:<input id="rolealllist" style="width: 200px;">
 	 &nbsp;&nbsp;|&nbsp;&nbsp; 账户: <input id="accountSearcher" style="width:200px" />
 	 </div>
 </body>

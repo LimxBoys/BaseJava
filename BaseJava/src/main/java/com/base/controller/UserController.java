@@ -122,11 +122,12 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/add")
 	public @ResponseBody
-	Object add(String loginName, String displayName, String contactPhone,
+	Object add(String loginName, String displayName, String contactPhone,String email,
 			String password, @RequestParam(required = false) int[] roleIdAdd) {
 		User user = new User();
 		user.setLoginName(loginName);
 		user.setDisplayName(displayName);
+		user.setEmail(email);
 		user.setContactPhone(contactPhone);
 		password = MD5Util.encrypt(loginName, password);
 		user.setPassword(MD5Util.encode(password));
@@ -199,10 +200,11 @@ public class UserController {
 	@RequestMapping(value = "/update")
 	public @ResponseBody
 	Object update(String loginName, String displayName, int id,
-			String contactPhone,
+			String contactPhone,String email,
 			@RequestParam(required = false) int[] roleIdModify) {
 		User user = new User();
 		user.setId(id);
+		user.setEmail(email);
 		user.setLoginName(loginName);
 		user.setContactPhone(contactPhone);
 		user.setDisplayName(displayName);

@@ -127,7 +127,7 @@ public class RoleController {
 		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
 		Map<String, Object> map1=new HashMap<String, Object>();
 		map1.put("id", 0);
-		map1.put("text", "请选择角色");
+		map1.put("text", "全部");
 		list.add(map1);
 		if(listrole!=null&&listrole.size()!=0){
 			for(Role role:listrole){
