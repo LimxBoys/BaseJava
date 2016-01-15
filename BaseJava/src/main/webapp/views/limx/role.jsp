@@ -69,7 +69,7 @@
 				<input type="button" onclick="reloadtree()" value="刷新">
 			</div>
 			<div  align="center"  data-options="split:true,iconCls:'icon-ok'">
-				<input type="button" onclick="savemodulerole()" value="保存">
+				<input type="button" style="cursor:pointer; width:44px;height:24px;background:#95B8E7;font-size:14px;color:#fff;border-bottom-left-radius:5px;border-bottom-right-radius:5px;" onclick="savemodulerole()" value="保存">
 			</div>
 			<div>
 				<ul class="easyui-tree" id="moduleTree" data-options="lines:true"></ul>
