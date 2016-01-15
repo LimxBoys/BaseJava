@@ -23,6 +23,13 @@
 	src="<%=basePath%>/resource/easyui/jquery.easyui.min.js"></script>
 </head>
 <body>
+<div id="storetbar">
+	<a href="#" id="materialsbilladd" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="javascript:addrole()">新增</a>
+			<a href="#" id="materialsbilladd" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="javascript:editrole()">修改</a>
+		
+		<a href="#" id="materialsbilldelete" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="javascript:deleterole()">删除</a>
+	         <b>角色名称:</b>&nbsp;&nbsp;&nbsp;&nbsp; <input id="accountSearcher"  style="width:133px" />
+	</div>
 <div id="dlg">
 		<div id="addrole" class="easyui-panel" style="display:none">
 			<form id="addroleform">
@@ -50,7 +57,7 @@
 	<div class="easyui-layout" align="center"
 		style="width:100%;height:100%;">
 
-		<div data-options="region:'west',split:true" style="width:360px;">
+		<div data-options="region:'west',split:true" style="width:425px;">
 			<div class="easyui-accordion" data-options="fit:true,border:false">
 				<div title="角色列表" data-options="selected:true" style="padding:10px;">
 				    	<table id="rolelist" singleSelect="true" ></table>
@@ -77,6 +84,65 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	function addrole(){
+			var div1=$("#addrole");																         
+          	div1.attr("style","display"),
+          	  $('#roleName').textbox('setValue','');
+          	  $('#description').textbox('setValue','');
+          	$('#dlg').dialog({
+		modal:true,
+		title:'新增',
+		width: 400,    
+  			height: 200,  
+		buttons:[
+		{text:'保存',handler:function(){sbumitform();}},
+		{text:'关闭',handler:function(){$('#dlg').dialog('close')}}
+		]
+});
+	}
+	function editrole(){
+             var rowInfo = $('#rolelist').datagrid('getSelected');
+                 if(rowInfo != '' && rowInfo != null){
+                  	var div1=$("#addrole");																         
+		            div1.attr("style","display"),
+            	     $('#dlg').dialog({
+                                          modal:true,
+                                          title:'编辑用户',
+                                          width: 400,    
+                                             height: 200, 
+                                          buttons:[
+                                          {text:'保存',handler:function(){sbumitEdit();}},
+                                          {text:'关闭',handler:function(){$('#dlg').dialog('close')}}
+                                          ]
+                                            });
+				  $('#id').textbox('setValue',rowInfo.id);
+				  $('#roleName').textbox('setValue',rowInfo.roleName);
+				  $('#description').textbox('setValue',rowInfo.description);
+				}else{
+						$.messager.alert('提示','请选择一个角色');
+				}
+	}
+	function deleterole(){
+	         var rowInfo = $('#rolelist').datagrid('getSelected');
+	        if(rowInfo !='' && rowInfo !=null){
+	      			$.ajax({
+		url : '<%=path%>/role/del.do?roleId='+rowInfo.roleId,
+		data : {
+			/* roleId:roleid */
+		},
+		success:function(json){  
+	        			if(json.success==true){
+		         $('#rolelist').datagrid();
+			}else{
+				alert(json.msg);		
+			}
+	    			 } 
+	});
+	       	
+	      	 	}else{
+	      	 		$.messager.alert('提示','请选择删除角色');
+	      	 	}
+	}
 	/*
 	*jiaose
 	*/
@@ -141,7 +207,14 @@
 		}
 	}
                  $(document).ready(function(){
-
+$('#accountSearcher').searchbox({ 
+				prompt:'请输入角色名称',
+				searcher:function(value,name){ 
+					$('#rolelist').datagrid('load', {
+						roleName: value,
+					});
+				}
+			});
 								$('#rolelist').datagrid({
 											pagination : true,//分页控件  
 												fit : true,
@@ -177,79 +250,7 @@
 														}
 														
 														]],
-														toolbar: [{
-														            id: 'add',
-														            text: '新增',
-														            iconCls: 'icon-add',
-														            handler: function () {
-														            			var div1=$("#addrole");																         
-																            	div1.attr("style","display"),
-																            	  $('#roleName').textbox('setValue','');
-																            	  $('#description').textbox('setValue','');
-																            	$('#dlg').dialog({
-																				modal:true,
-																				title:'新增',
-																				width: 400,    
-																    			height: 200,  
-																				buttons:[
-																				{text:'保存',handler:function(){sbumitform();}},
-																				{text:'关闭',handler:function(){$('#dlg').dialog('close')}}
-																				]
-																		});
-														           	}
-														},
-														{
-															 id: 'update',
-														            text: '修改',
-														            iconCls: 'icon-edit',
-														            handler: function () {
-														             var rowInfo = $('#rolelist').datagrid('getSelected');
-														                 if(rowInfo != '' && rowInfo != null){
-														                  	var div1=$("#addrole");																         
-																            div1.attr("style","display"),
-														            	     $('#dlg').dialog({
-								                                                modal:true,
-								                                                title:'编辑用户',
-								                                                width: 400,    
-				    			                                                height: 200, 
-								                                                buttons:[
-								                                                {text:'保存',handler:function(){sbumitEdit();}},
-								                                                {text:'关闭',handler:function(){$('#dlg').dialog('close')}}
-								                                                ]
-							                                                   });
-																		  $('#id').textbox('setValue',rowInfo.id);
-																		  $('#roleName').textbox('setValue',rowInfo.roleName);
-																		  $('#description').textbox('setValue',rowInfo.description);
-																		}else{
-																				$.messager.alert('提示','请选择一个角色');
-																		}
-														           	}
-														},{
-															 id: 'delete',
-														            text: '删除',
-														            iconCls: 'icon-remove',
-														            handler: function () {
-														            var rowInfo = $('#rolelist').datagrid('getSelected');
-														           if(rowInfo !='' && rowInfo !=null){
-												           			$.ajax({
-																		url : '<%=path%>/role/del.do?roleId='+rowInfo.roleId,
-																		data : {
-																			/* roleId:roleid */
-																		},
-																		success:function(json){  
-														           			if(json.success==true){
-																		         $('#rolelist').datagrid();
-																			}else{
-																				alert(json.msg);		
-																			}
-														       			 } 
-																	});
-												            	
-												           	 	}else{
-												           	 		$.messager.alert('提示','请选择删除角色');
-												           	 	}
-															}
-														}],
+														toolbar:"#storetbar" ,
 											onClickRow : function(rowIndex, rowData) {
 												$('#moduleTree').tree('reload'); 
 												
