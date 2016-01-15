@@ -3,6 +3,7 @@ package com.base.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,12 +27,12 @@ public class TestController {
 			// 第一个sheet
 			Map<String, Object> listMap = new HashMap<String, Object>();
 			List<Map<String, Object>> listdata = new ArrayList<Map<String, Object>>();
-			Map<String, Object> map = new HashMap<String, Object>();
+			Map<String, Object> map = new LinkedHashMap<String, Object>();
 			map.put("t1", "t1");
 			map.put("t2", "t2");
 			map.put("t3", "t3");
 			map.put("t4", "t4");
-			Map<String, Object> map1 = new HashMap<String, Object>();
+			Map<String, Object> map1 = new LinkedHashMap<String, Object>();
 			map1.put("t1", "t1");
 			map1.put("t2", "t2");
 			map1.put("t3", "t3");
