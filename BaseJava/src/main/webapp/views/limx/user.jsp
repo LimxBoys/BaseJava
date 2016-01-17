@@ -34,6 +34,8 @@
 	src="<%=basePath%>/resource/easyui/jquery.min.js"></script>
 <script type="text/javascript"
 	src="<%=basePath%>/resource/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>/resource/easyui/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	$(function() {
 				$.extend($.fn.validatebox.defaults.rules, {   
