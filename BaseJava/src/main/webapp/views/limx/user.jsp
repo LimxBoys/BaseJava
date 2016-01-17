@@ -292,7 +292,7 @@
 						modal:true,
 						title:'新增',
 						width: 400,    
-		    			height: 600,  
+		    			height: 400,  
 						buttons:[
 						{text:'保存',handler:function(){add();}},
 						{text:'关闭',handler:function(){Canceladd();}}
@@ -319,7 +319,7 @@
 						modal:true,
 						title:'修改',
 						width: 400,    
-		    			height: 600,  
+		    			height: 400,  
 						buttons:[
 						{text:'保存',handler:function(){save();}},
 						{text:'关闭',handler:function(){CancelModify();}}
