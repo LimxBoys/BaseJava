@@ -370,20 +370,17 @@
 	}
 	function rolelistAdddatagrid(){
 		$('#rolelistAdd').datagrid({
-		pagination : true,//分页控件  
 		fit : true,
 		fitColumns : true,
 		rownumbers : true,
-		pageSize : 10,
 		idField : '',//指定列biaoshi
-		pageList : [ 10, 20, 30, 40, 50 ],
 		frozenColumns : [ [ {
 			field : 'roleId',
 			width : 10,
 			align : 'center',
 			checkbox : true
 		} ] ],
-		url : '<%=basePath%>/role/list.do',
+		url : '<%=basePath%>/role/listuserrole.do',
 		columns : [ [
 				{
 					field : 'roleName',
@@ -406,21 +403,17 @@
 	
 	function rolelistModifydatagrid(){
 	$('#rolelistModify').datagrid({
-	pagination : true,//分页控件  
 		fit : true,
 		fitColumns : true,
-		height:200,
 		rownumbers : true,
-		pageSize : 10,
 		idField : '',//指定列biaoshi
-		pageList : [ 10, 20, 30, 40, 50 ],
 		frozenColumns : [ [ {
 			field : 'roleId',
 			width : 10,
 			align : 'center',
 			checkbox : true
 		} ] ],
-		url : '<%=basePath%>/role/list.do',
+		url : '<%=basePath%>/role/listuserrole.do',
 		columns : [ [
 				{
 					field : 'roleName',
@@ -493,7 +486,7 @@
 				<font size="3" style="">请选择角色:</font>
 			</div>
 			<br />
-			<div id="rolelistAdd1" style="height: 400"></div>
+			<div id="rolelistAdd1" style="height: 200"></div>
 			<!-- <br>
 			<div style="padding:5px;text-align:center;">
 				<a href="javascript:add()" class="easyui-linkbutton" icon="icon-ok">Ok</a>
@@ -526,7 +519,7 @@
 				<font size="3" style="">请选择角色:</font>
 			</div>
 			<br />
-			<div id="rolelistModify1" style="height: 400"></div>
+			<div id="rolelistModify1" style="height: 200"></div>
 			<!-- <div style="wpadding:5px;text-align:center;">
 				<a href="javascript:save()" class="easyui-linkbutton" icon="icon-ok">Ok</a>
 				<a href="javascript:Cancel()" class="easyui-linkbutton"

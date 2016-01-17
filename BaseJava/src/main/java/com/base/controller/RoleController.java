@@ -118,6 +118,14 @@ public class RoleController {
 				pageNum, pageSize);
 		return PageUtil.convertGrid(page);
 	}
+	@RequestMapping("/listuserrole")
+	public @ResponseBody
+	Object listuserrole(HttpServletRequest request) {
+		Map<String, Object> searchCondionMap = SearchConditionUtil
+				.packageSearchCondion(request);
+		List<Role> listrole= roleService.findAllEffectiveRoles();
+		return listrole;
+	}
 	@RequestMapping("/listall")
 	public @ResponseBody
 	Object listall(HttpServletRequest request) {
