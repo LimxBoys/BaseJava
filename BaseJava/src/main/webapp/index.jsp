@@ -30,8 +30,6 @@
 	$(document)
 			.ready(
 					function() {
-					tabClose();
-    tabCloseEven();
 						$('.easyui-accordion li a').click(
 								function() {
 									var tabTitle = $(this).text();
@@ -67,83 +65,57 @@
 									+ '" style="width:100%;height:100%;"></iframe>';
 							return s;
 						}
-
-						function tabClose() {
-							/*双击关闭TAB选项卡*/
-							$(".tabs-inner").dblclick(function() {
-								var subtitle = $(this).children("span").text();
-								$('#tabs').tabs('close', subtitle);
-							})
-
-							$(".tabs-inner").bind('contextmenu', function(e) {
-								$('#mm').menu('show', {
-									left : e.pageX,
-									top : e.pageY,
-								});
-								var subtitle = $(this).children("span").text();
-								$('#mm').data("currtab", subtitle);
-								return false;
-							});
-						}
-
-						//绑定右键菜单事件
-						function tabCloseEven() {
-							//关闭当前
-							$('#mm-tabclose').click(function() {
-								var currtab_title = $('#mm').data("currtab");
-								$('#tabs').tabs('close', currtab_title);
-							})
-							//全部关闭
-							$('#mm-tabcloseall').click(function() {
-								$('.tabs-inner span').each(function(i, n) {
-									var t = $(n).text();
-									$('#tabs').tabs('close', t);
-								});
-							});
-
-							//关闭除当前之外的TAB
-							$('#mm-tabcloseother').click(function() {
-								var currtab_title = $('#mm').data("currtab");
-								$('.tabs-inner span').each(function(i, n) {
-									var t = $(n).text();
-									if (t != currtab_title)
-										$('#tabs').tabs('close', t);
-								});
-							});
-							//关闭当前右侧的TAB
-							$('#mm-tabcloseright').click(function() {
-								var nextall = $('.tabs-selected').nextAll();
-								if (nextall.length == 0) {
-									//msgShow('系统提示','后边没有啦~~','error');
-									alert('后边没有啦~~');
-									return false;
-								}
-								nextall.each(function(i, n) {
-									var t = $('a:eq(0) span', $(n)).text();
-									$('#tabs').tabs('close', t);
-								});
-								return false;
-							});
-							//关闭当前左侧的TAB
-							$('#mm-tabcloseleft').click(function() {
-								var prevall = $('.tabs-selected').prevAll();
-								if (prevall.length == 0) {
-									alert('到头了，前边没有啦~~');
-									return false;
-								}
-								prevall.each(function(i, n) {
-									var t = $('a:eq(0) span', $(n)).text();
-									$('#tabs').tabs('close', t);
-								});
-								return false;
-							});
-
-							//退出
-							$("#mm-exit").click(function() {
-								$('#mm').menu('hide');
-
-							})
-						}
+					$(".tabs-header").bind('contextmenu',function(e){
+		e.preventDefault();
+		$('#rcmenu').menu('show', {
+			left: e.pageX,
+			top: e.pageY
+		});
+	});
+	//关闭当前标签页
+	$("#closecur").bind("click",function(){
+		var tab = $('#tabs').tabs('getSelected');
+		var index = $('#tabs').tabs('getTabIndex',tab);
+		$('#tabs').tabs('close',index);
+	});
+	//关闭所有标签页
+	$("#closeall").bind("click",function(){
+		var tablist = $('#tabs').tabs('tabs');
+		for(var i = tablist.length - 1; i >= 1; i--){
+			$('#tabs').tabs('close',i);
+		}
+	});
+	//关闭非当前标签页（先关闭右侧，再关闭左侧）
+	$("#closeother").bind("click",function(){
+		var tablist = $('#tabs').tabs('tabs');
+		var tab = $('#tabs').tabs('getSelected');
+		var index = $('#tabs').tabs('getTabIndex',tab);
+		for(var i = tablist.length - 1; i > index; i--){
+			$('#tabs').tabs('close',i);
+		}
+		var num = index - 1;
+		for(var i = num; i >= 1; i--){
+			$('#tabs').tabs('close',1);
+		}
+	});
+	//关闭当前标签页右侧标签页
+	$("#closeright").bind("click",function(){
+		var tablist = $('#tabs').tabs('tabs');
+		var tab = $('#tabs').tabs('getSelected');
+		var index = $('#tabs').tabs('getTabIndex',tab);
+		for(var i = tablist.length-1; i > index; i--){
+			$('#tabs').tabs('close',i);
+		}
+	});
+	//关闭当前标签页左侧标签页
+	$("#closeleft").bind("click",function(){
+		var tab = $('#tabs').tabs('getSelected');
+		var index = $('#tabs').tabs('getTabIndex',tab);
+		var num = index - 1;
+		for(var i = num; i >= 1; i--){
+			$('#tabs').tabs('close',1);
+		}
+	});
 						
 	$('#title2tree').tree({  
     url: '<%=basePath%>/function/mylist.do',  
@@ -328,13 +300,14 @@
 			</div>
 		</div>
 	</div>
-	<div id="mm" class="easyui-menu" style="width:150px;">
-        <div id="mm-tabclose">关闭</div>
-        <div id="mm-tabcloseall">全部关闭</div>
-        <div id="mm-tabcloseother">除此之外全部关闭</div>
-        <div class="menu-sep"></div>
-        <div id="mm-tabcloseright">当前页右侧全部关闭</div>
-        <div id="mm-tabcloseleft">当前页左侧全部关闭</div>
+	<%-- tabs标签栏的关闭菜单 --%>
+	<div id="rcmenu" class="easyui-menu" style="">
+		<div id="closecur">关闭</div>
+		<div id="closeall">关闭全部</div>
+		<div id="closeother">关闭其他</div>
+		<div class="menu-sep"></div>
+		<div id="closeright">关闭右侧标签页</div>
+		<div id="closeleft">关闭左侧标签页</div>
 	</div>
 		<div id="user_changepwd"></div>
 </body>
