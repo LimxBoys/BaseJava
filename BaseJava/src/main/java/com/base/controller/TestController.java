@@ -9,15 +9,19 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.base.service.UserService;
 import com.base.util.ExcelUtil;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
+	@Autowired
+	private UserService userService;
 	@RequestMapping("/excel")
 	@ResponseBody
 	public Object excel(HttpServletResponse response) {
@@ -107,5 +111,11 @@ public class TestController {
 			System.out.println("value= " + v);
 		}
 		return true;
+	}
+	@RequestMapping("/error")
+	@ResponseBody
+	public Object error(){
+		
+		return userService.findall();
 	}
 }
