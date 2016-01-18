@@ -61,6 +61,8 @@
 		<property name="connectionProperties">
 			<value>clientEncoding=UTF-8</value>
 		</property>
+		<!-- 配置监控统计拦截的filters -->
+      <property name="filters" value="stat" />
 	</bean>
 
 	<!-- mybatis文件配置，扫描所有mapper文件 -->
