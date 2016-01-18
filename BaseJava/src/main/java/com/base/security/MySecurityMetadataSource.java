@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -45,7 +47,7 @@ public class MySecurityMetadataSource implements
 	@Autowired
 	private RoleDAO roleDAO;
 	private UrlPathMatcher urlMatcher = new UrlPathMatcher();
-
+	private static final Logger LOGGER=LoggerFactory.getLogger(MySecurityMetadataSource.class);
 	/**
 	 * @PostConstruct是Java EE 5引入的注解， Spring允许开发者在受管Bean中使用它。当DI容器实例化当前受管Bean时，
 	 * @PostConstruct注解的方法会被自动触发，从而完成一些初始化工作，
@@ -89,10 +91,10 @@ public class MySecurityMetadataSource implements
 	 */
 	public Collection<ConfigAttribute> getAttributes(Object object)
 			throws IllegalArgumentException {
-		loadResourceDefine();
+		/*loadResourceDefine();*/
 		// object getRequestUrl 是获取用户请求的url地址
 		String url = ((FilterInvocation) object).getRequestUrl();
-
+		LOGGER.info(new StringBuilder().append("访问地址:").append(url).toString());
 		// resourceMap保存了loadResourceDefine方法加载进来的数据
 		Iterator<String> ite = resourceMap.keySet().iterator();
 
