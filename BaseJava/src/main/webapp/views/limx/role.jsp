@@ -30,7 +30,7 @@
 			<a href="#" id="materialsbilladd" class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="javascript:editrole()">修改</a>
 		
 		<a href="#" id="materialsbilldelete" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="javascript:deleterole()">删除</a>
-	         <b>角色名称:</b>&nbsp;&nbsp;&nbsp;&nbsp; <input id="accountSearcher"  style="width:133px" />
+	          <span style="margin-left:5px;margin-right:8px; font-weight: bold">角色名称:</span><input id="accountSearcher"  style="width:133px" />
 	</div>
 <div id="dlg">
 		<div id="addrole" class="easyui-panel" style="display:none">
