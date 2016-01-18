@@ -57,4 +57,26 @@
 			</value>
 		</property>    
 	</bean>
+	<!-- 邮件发送 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<!-- smtp地址，根据发送者邮箱的不同而改变 -->
+		<property name="host">
+			<value>smtp.sina.com</value>
+		</property>
+
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.timeout">25000</prop>
+			</props>
+		</property>
+		<!-- 发送者的用户名 -->
+		<property name="username">
+			<value>limx_test@sina.com</value>
+		</property>
+		<!-- 邮箱登录密码 -->
+		<property name="password">
+			<value>123456a</value>
+		</property>
+	</bean>
 </beans>

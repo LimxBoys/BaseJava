@@ -7,19 +7,26 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.base.service.UserService;
+import com.base.util.EmailUtil;
 import com.base.util.ExcelUtil;
 
 @Controller
 @RequestMapping("/test")
 public class TestController {
+	@Autowired
+	private JavaMailSender mailSender;
 	@Autowired
 	private UserService userService;
 	@RequestMapping("/excel")
@@ -117,5 +124,11 @@ public class TestController {
 	public Object error(){
 		
 		return userService.findall();
+	}
+	@RequestMapping("/email")
+	@ResponseBody
+	public Object email(){
+		EmailUtil.sendhtmlemail(mailSender, "657713230@qq.com", "您好", "你好");
+		return "";
 	}
 }
