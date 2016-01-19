@@ -79,4 +79,6 @@
 			<value>123456a</value>
 		</property>
 	</bean>
+	<!-- 用于持有ApplicationContext，可以使用SpringContextUtil.getBean('xxx')的静态方法得到spring bean对象 -->
+	<bean id="springContextUtil" class="com.base.util.SpringContextUtil"/>
 </beans>

@@ -14,7 +14,8 @@ public class EmailUtil {
 	 * @param mailTitle 所发送的邮件的标题
 	 * @param mailContent 所发送的邮件的内容
 	 */
-	public void sendemail(JavaMailSender mailSender,String to, String email_title, String email_content) {
+	public void sendemail(String to, String email_title, String email_content) {
+		JavaMailSender mailSender=SpringContextUtil.getBean("mailSender");
 		SimpleMailMessage mail=new SimpleMailMessage();
 		mail.setTo(to);//设置目标邮箱地址
 		mail.setFrom("justtry1@126.com");
@@ -29,8 +30,9 @@ public class EmailUtil {
 	 * @param mailContent 所发送的邮件的内容
 	 * @throws MessagingException 
 	 */
-	public static void sendhtmlemail(JavaMailSender mailSender,String to, String email_title,
+	public static void sendhtmlemail(String to, String email_title,
 			String email_content){
+		JavaMailSender mailSender=SpringContextUtil.getBean("mailSender");
 		MimeMessage mm=mailSender.createMimeMessage();
 		MimeMessageHelper helper;
 		try {

@@ -26,8 +26,6 @@ import com.base.util.ExcelUtil;
 @RequestMapping("/test")
 public class TestController {
 	@Autowired
-	private JavaMailSender mailSender;
-	@Autowired
 	private UserService userService;
 	@RequestMapping("/excel")
 	@ResponseBody
@@ -128,7 +126,7 @@ public class TestController {
 	@RequestMapping("/email")
 	@ResponseBody
 	public Object email(){
-		EmailUtil.sendhtmlemail(mailSender, "657713230@qq.com", "您好", "你好");
+		EmailUtil.sendhtmlemail("657713230@qq.com", "您好", "你好");
 		return "";
 	}
 }
