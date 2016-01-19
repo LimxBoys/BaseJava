@@ -17,7 +17,7 @@ public class JdbcUtil {
     /**
     * @Method: getConnection
     * @Description: 从数据库连接池中获取数据库连接对象
-    * @Anthor:孤傲苍狼
+    * @Anthor:李明星
     * @return Connection数据库连接对象
     * @throws SQLException
     */ 
