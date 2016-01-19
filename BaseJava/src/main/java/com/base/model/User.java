@@ -1,5 +1,6 @@
 package com.base.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 /**
  * 
@@ -8,7 +9,7 @@ import java.sql.Timestamp;
  * @email:limingxing_aqgy@sina.com
  * @version:1.0
  */
-public class User {
+public class User implements Serializable{
 	private int id;
 	private String username;
 	private String loginName;// 登录名

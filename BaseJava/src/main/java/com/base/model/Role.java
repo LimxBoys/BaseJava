@@ -1,5 +1,6 @@
 package com.base.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -9,7 +10,7 @@ import java.sql.Timestamp;
  * @email:limingxing_aqgy@sina.com
  * @version:1.0
  */
-public class Role {
+public class Role implements Serializable{
 
 	private Integer id;
 	private String roleName;// 角色名称

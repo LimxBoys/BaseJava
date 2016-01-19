@@ -1,4 +1,5 @@
 package com.base.model;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -8,7 +9,7 @@ import java.sql.Timestamp;
  * @email:limingxing_aqgy@sina.com
  * @version:1.0
  */
-public class Function {
+public class Function implements Serializable{
 
   private int id;
   private int parentId;// 父Id
