@@ -30,43 +30,88 @@
 	src="<%=basePath%>/resource/bootstrap/treeview/bootstrap-treeview.min.js"></script>
 <script type="text/javascript">
 	var defaultData = [ {
-		text : 'Parent 1',
-		href : '#parent1',
-		tags : [ '4' ],
+		text : "Node 1",
+		href : "#node-1",
+		selectable : true,
+		state : {
+			checked : true,
+			expanded : true
+		},
 		nodes : [ {
-			text : 'Child 1',
-			href : '#child1',
-			tags : [ '2' ],
+			text : "Node 2",
+			href : "#node-1",
+			selectable : true,
+			state : {
+				checked : true,
+				expanded : true
+			},
 			nodes : [ {
-				text : 'Grandchild 1',
-				href : '#grandchild1',
-				tags : [ '0' ]
+				text : "Node 3",
+				href : "#node-1",
+				selectable : true,
+				state : {
+					checked : true,
+					expanded : false
+				},
+				nodes : []
 			}, {
-				text : 'Grandchild 2',
-				href : '#grandchild2',
-				tags : [ '0' ]
+				text : "Node 4",
+				id:"node4",
+				href : "#node-1",
+				selectable : true,
+				state : {
+					checked : true,
+					expanded : false,
+					selected:true
+				},
+				nodes : []
 			} ]
 		}, {
-			text : 'Child 2',
-			href : '#child2',
-			tags : [ '0' ]
+			text : "Node 5",
+			href : "#node-1",
+			selectable : true,
+			state : {
+				checked : true,
+				expanded : false
+			},
+			nodes : []
 		} ]
 	}, {
-		text : 'Parent 2',
-		href : '#parent2',
-		tags : [ '0' ]
+		text : "Node 6",
+		href : "#node-1",
+		selectable : true,
+		state : {
+			checked : true,
+			expanded : false
+		},
+		nodes : []
 	}, {
-		text : 'Parent 3',
-		href : '#parent3',
-		tags : [ '0' ]
-	}, {
-		text : 'Parent 4',
-		href : '#parent4',
-		tags : [ '0' ]
-	}, {
-		text : 'Parent 5',
-		href : '#parent5',
-		tags : [ '0' ]
+		text : "Node 7",
+		href : "#node-1",
+		selectable : true,
+		state : {
+			checked : true,
+			expanded : false
+		},
+		nodes : [{
+			text : "Node 8",
+			href : "#node-1",
+			selectable : true,
+			state : {
+				checked : true,
+				expanded : false
+			},
+			nodes : []
+		},{
+			text : "Node 9",
+			href : "#node-1",
+			selectable : true,
+			state : {
+				checked : true,
+				expanded : false
+			},
+			nodes : []
+		}]
 	} ];
 
 	$(function() {
@@ -85,16 +130,15 @@
 			selectedBackColor : "darkorange",
 			data : defaultData
 		});
-
 	});
 </script>
 </head>
 
 <body>
 	<div class="row">
-	<div class="col-sm-2">
-		<div id="treeview8" class=""></div>
-	</div>	
+		<div class="col-sm-2">
+			<div id="treeview8" class=""></div>
+		</div>
 	</div>
 </body>
 </html>
