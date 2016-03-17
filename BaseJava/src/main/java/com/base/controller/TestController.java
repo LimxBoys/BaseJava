@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.base.service.UserService;
 import com.base.util.EmailUtil;
 import com.base.util.ExcelUtil;
+import com.base.util.ExcelUtil5;
 
 @Controller
 @RequestMapping("/test")
@@ -71,7 +72,7 @@ public class TestController {
 			listMap1.put("head", new String[] { "列一", "列二", "列三", "列四" });
 			listMap1.put("list", listdata1);
 			list.add(listMap1);
-			ExcelUtil.exportExcel(response, list, title);
+			ExcelUtil5.exportExcel(response, list, title);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

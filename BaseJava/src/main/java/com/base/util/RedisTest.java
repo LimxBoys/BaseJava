@@ -1,4 +1,4 @@
-package com.base.util;
+/*package com.base.util;
 
 
 import org.junit.Before;
@@ -8,10 +8,9 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import java.util.*;
 
-/**
- * @author: flychao88
+*//**
  * Time: 2012.5.7 16:23:15
- */
+ *//*
 public class RedisTest {
     JedisPool pool;
     Jedis jedis;
@@ -23,10 +22,10 @@ public class RedisTest {
         //jedis.auth("password");
     }
 
-    /**
+    *//**
      * Redis存储初级的字符串
      * CRUD
-     */
+     *//*
     @Test
     public void testBasicString(){
         //-----添加数据----------
@@ -46,19 +45,19 @@ public class RedisTest {
         jedis.del("name");
         System.out.println(jedis.get("name"));//执行结果：null
 
-        /**
+        *//**
          * mset相当于
          * jedis.set("name","minxr");
          * jedis.set("jarorwar","闵晓荣");
-         */
+         *//*
         jedis.mset("name","minxr","jarorwar","闵晓荣");
         System.out.println(jedis.mget("name","jarorwar"));
 
     }
 
-    /**
+    *//**
      * jedis操作Map
-     */
+     *//*
     @Test
     public void testMap(){
         Map<String,String> user=new HashMap<String,String>();
@@ -86,9 +85,9 @@ public class RedisTest {
 
     }
 
-    /**
+    *//**
      * jedis操作List
-     */
+     *//*
     @Test
     public void testList(){
         //开始前，先移除所有的内容
@@ -103,9 +102,9 @@ public class RedisTest {
        System.out.println(jedis.lrange("java framework",0,-1));
     }
 
-    /**
+    *//**
      * jedis操作Set
-     */
+     *//*
     @Test
     public void testSet(){
         //添加
@@ -152,3 +151,4 @@ public class RedisTest {
     }
     }
 
+*/
