@@ -78,8 +78,12 @@
 		$("#areaclick").click(function(){
 			/* alert($('#county').combobox('getValue')); */
 			$("#area").text($('#county').combobox('getValue'));
+			var v = $('#ss').timespinner('getValue');  // 获取时间微调组件的值
+			$("#timespinner").text(v);
+			
 		});
 	});
+	
 </script>
 </head>
 
@@ -96,5 +100,9 @@
 	</ul>
 	<button id="areaclick">获取值</button>
 	<span id="area"></span>
+	<input id="ss" class="easyui-timespinner"  style="width:100px;"   
+        required="required" data-options="min:'08:30',showSeconds:true" />  
+	<div id="timespinner"></div>
+	
 </body>
 </html>
