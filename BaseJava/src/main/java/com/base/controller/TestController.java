@@ -11,6 +11,9 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.spi.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -26,6 +29,7 @@ import com.base.util.ExcelUtil5;
 @Controller
 @RequestMapping("/test")
 public class TestController {
+	private Log log=LogFactory.getLog(TestController.class);
 	@Autowired
 	private UserService userService;
 	@RequestMapping("/excel")
@@ -88,7 +92,13 @@ public class TestController {
 		map.put("1", "value1");
 		map.put("2", "value2");
 		map.put("3", "value3");
-
+		Map<String,Object> map1=null;
+		try {
+			System.out.println(map1.get("a"));
+		} catch (Exception e) {
+			log.info("日志记录：**************com.base.controller.TestController.testMap.......出错");
+			return false;
+		}
 		// 第一种：普遍使用，二次取值
 		System.out.println("通过Map.keySet遍历key和value：");
 		for (String key : map.keySet()) {
