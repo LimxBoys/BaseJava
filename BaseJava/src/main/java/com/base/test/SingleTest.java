@@ -1,8 +1,8 @@
 package com.base.test;
 
-import org.junit.Test;
-
-public class SingleTest {
+/*import org.junit.Test;
+*/
+public class SingleTest {/*
 	@Test
 	public void test() {
 		
@@ -29,5 +29,5 @@ public class SingleTest {
 		thread8.start();
 		thread9.start();
 		
-	}
+	}*/
 }
