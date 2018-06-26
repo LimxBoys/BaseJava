@@ -15,7 +15,7 @@ import com.esotericsoftware.reflectasm.MethodAccess;
 
 /**
  * asm反射工具类
- * @author jiaodepei
+ * @author limingxing
  *
  */
 public class ReflectAsmUtil {
